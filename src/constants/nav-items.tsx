@@ -1,8 +1,8 @@
-import { MapPin, Car, Shield, MessageSquare } from "lucide-react";
+import { MapPin, Edit, List, Settings } from "lucide-react";
 
 export const NAV_ITEMS = [
   { icon: <MapPin className="w-4 h-4 mb-1" />, label: "위치", path: "/location" },
-  { icon: <Car className="w-4 h-4 mb-1" />, label: "운전", path: "/driving" },
-  { icon: <Shield className="w-4 h-4 mb-1" />, label: "안전", path: "/safety" },
-  { icon: <MessageSquare className="w-4 h-4 mb-1" />, label: "채팅", path: "/chat" },
+  { icon: <Edit className="w-4 h-4 mb-1" />, label: "글쓰기", path: "/write" },
+  { icon: <List className="w-4 h-4 mb-1" />, label: "근처 글", path: "/nearby" },
+  { icon: <Settings className="w-4 h-4 mb-1" />, label: "설정", path: "/settings" },
 ];

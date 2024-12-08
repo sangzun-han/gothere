@@ -1,7 +1,7 @@
 import { Polygon } from "react-kakao-maps-sdk";
-import { useGetPolygonPaths } from "@/hooks/coordinates/use-get-polygon-paths";
+import { useGetPolygonPaths } from "@/hooks/coordinates";
 
-const KakaoPolygon = () => {
+export default function KakaoPolygon() {
   const { polygonPaths } = useGetPolygonPaths();
 
   return (
@@ -20,6 +20,4 @@ const KakaoPolygon = () => {
         ))}
     </>
   );
-};
-
-export default KakaoPolygon;
+}

@@ -3,7 +3,7 @@ import { useRecoilValue } from "recoil";
 import { geoLocationState } from "@/recoil/location/atoms";
 import { getPolygonCoordinates } from "@/app/utils/coordinates/get-polygon-coordinates";
 
-export const useGetPolygonPaths = () => {
+export default function useGetPolygonPaths() {
   const { dong } = useRecoilValue(geoLocationState);
   const [polygonPaths, setPolygonPaths] = useState<{ lat: number; lng: number }[][]>([]);
   const [error, setError] = useState<string | null>(null);
@@ -24,4 +24,4 @@ export const useGetPolygonPaths = () => {
   }, [dong]);
 
   return { polygonPaths };
-};
+}

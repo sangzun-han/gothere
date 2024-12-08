@@ -1,45 +1,37 @@
+"use client";
+
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useGeoLocation } from "@/hooks/location/use-geo-locatiopn";
-import { KakaoPolygon } from "@/components/kakao";
+import { KakaoPolygon, MapZoomControl, ReturnToLocationButton } from "@/components/kakao";
+import { useGeoLocation, useMapCenter } from "@/hooks/location";
+import { useMapZoom } from "@/hooks/kakao";
+import KakaoMapLoading from "./kakao-map-loading";
 
-const KakaoMapView = () => {
-  const { location, isLoading, isKakaoLoading } = useGeoLocation();
+export default function KakaoMapView() {
+  const { location, isLoading } = useGeoLocation();
+  const { zoomLevel, adjustZoom } = useMapZoom();
+  const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
+    lat: location.latitude,
+    lng: location.longitude,
+  });
 
-  if (isKakaoLoading) {
-    return (
-      <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 bg-white">
-        <div className="flex flex-col items-center">
-          <div className="loader ease-linear rounded-full border-4 border-t-4 border-gray-200 h-12 w-12 mb-4"></div>
-          <p className="text-gray-600">{isLoading && "카카오 맵 로딩 중입니다..."}</p>
-        </div>
-        <style jsx>{`
-          .loader {
-            border-top-color: #3498db;
-            animation: spinner 1s linear infinite;
-          }
-          @keyframes spinner {
-            0% {
-              transform: rotate(0deg);
-            }
-            100% {
-              transform: rotate(360deg);
-            }
-          }
-        `}</style>
-      </div>
-    );
-  }
+  const handleCenterChanged = (map: kakao.maps.Map) => {
+    const center = map.getCenter();
+    updateCenter({ lat: center.getLat(), lng: center.getLng() });
+  };
+
+  if (isLoading) return <KakaoMapLoading />;
 
   return (
     <Map
-      center={{ lat: location.latitude, lng: location.longitude }}
+      center={currentCenter}
       style={{ width: "100%", height: "100vh" }}
-      level={5}
+      level={zoomLevel}
+      onCenterChanged={handleCenterChanged}
     >
       <MapMarker position={{ lat: location.latitude, lng: location.longitude }} />
       <KakaoPolygon />
+      <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
+      <ReturnToLocationButton onClick={returnToInitialLocation} />
     </Map>
   );
-};
-
-export default KakaoMapView;
+}

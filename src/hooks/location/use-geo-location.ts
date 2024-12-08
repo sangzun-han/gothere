@@ -3,10 +3,10 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { geoLocationErrorState, geoLocationLoadingState, geoLocationState } from "@/recoil/location/atoms";
-import { useKakaoLoader } from "../kakao/use-kakao-loader";
 import { initializeLocation } from "@/app/utils/location/initialize-location";
+import { useKakaoLoader } from "../kakao";
 
-export const useGeoLocation = () => {
+export default function useGeoLocation() {
   const [location, setLocation] = useRecoilState(geoLocationState);
   const [isLoading, setIsLoading] = useRecoilState(geoLocationLoadingState);
   const [error, setError] = useRecoilState(geoLocationErrorState);
@@ -36,7 +36,6 @@ export const useGeoLocation = () => {
   return {
     location,
     error,
-    isLoading,
-    isKakaoLoading,
+    isLoading: isLoading || isKakaoLoading,
   };
-};
+}

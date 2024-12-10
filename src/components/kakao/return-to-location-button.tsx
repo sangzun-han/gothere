@@ -12,7 +12,7 @@ export default function ReturnToLocationButton({ onClick }: ReturnToLocationButt
         className="p-2 bg-white rounded-full shadow-md text-lg font-bold"
         aria-label="현재위치로 돌아오기"
       >
-        <LocateIcon className="w-4 h-4 text-black" />
+        <LocateIcon className="w-4 h-4 text-text-primary" />
       </button>
     </div>
   );

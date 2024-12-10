@@ -14,7 +14,7 @@ export default function MapZoomControl({ onZoomIn, onZoomOut }: MapZoomControlsP
         <PlusIcon className="w-4 h-4" />
       </button>
       <button onClick={onZoomOut} className="p-2 bg-white rounded-full shadow-md text-lg font-bold" aria-label="축소">
-        <MinusIcon className="w-4 h-4 text-black" />
+        <MinusIcon className="w-4 h-4 text-text-primary" />
       </button>
     </div>
   );

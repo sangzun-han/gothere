@@ -1,7 +1,14 @@
 "use client";
 
-import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { KakaoPolygon, MapZoomControl, ReturnToLocationButton } from "@/components/kakao";
+import { Map } from "react-kakao-maps-sdk";
+import {
+  KakaoPolygon,
+  MapZoomControl,
+  ReturnToLocationButton,
+  UserMarker,
+  MyMarker,
+  MarkerInfoModal,
+} from "@/components/kakao";
 import { useGeoLocation, useMapCenter } from "@/hooks/location";
 import { useMapZoom } from "@/hooks/kakao";
 import KakaoMapLoading from "./kakao-map-loading";
@@ -28,7 +35,9 @@ export default function KakaoMapView() {
       level={zoomLevel}
       onCenterChanged={handleCenterChanged}
     >
-      <MapMarker position={{ lat: location.latitude, lng: location.longitude }} />
+      <MyMarker latitude={location.latitude} longitude={location.longitude} />
+      <UserMarker />
+      <MarkerInfoModal />
       <KakaoPolygon />
       <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
       <ReturnToLocationButton onClick={returnToInitialLocation} />

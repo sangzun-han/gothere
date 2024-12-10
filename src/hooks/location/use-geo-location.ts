@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { geoLocationErrorState, geoLocationLoadingState, geoLocationState } from "@/recoil/location/atoms";
-import { initializeLocation } from "@/app/utils/location/initialize-location";
+import { initializeLocation } from "@/utils/location/initialize-location";
 import { useKakaoLoader } from "../kakao";
 
 export default function useGeoLocation() {

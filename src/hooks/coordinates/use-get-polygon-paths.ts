@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { geoLocationState } from "@/recoil/location/atoms";
-import { getPolygonCoordinates } from "@/app/utils/coordinates/get-polygon-coordinates";
+import { getPolygonCoordinates } from "@/utils/coordinates/get-polygon-coordinates";
 
 export default function useGetPolygonPaths() {
   const { dong } = useRecoilValue(geoLocationState);

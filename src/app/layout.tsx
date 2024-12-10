@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "gothere : 당신의 흔적이 머무는 곳",
-  description: "지금 여기, 이 공간에서 편지를 써보세요.\n 내가 글을 남긴 공간에 가야만 편지를 열어 볼 수 있습니다.",
+  description: "지금 여기, 이 공간에서 글을 남겨보세요.\n 글을 남긴 공간에 가야만 글를 열어 볼 수 있습니다.",
   icons: {
     icon: "/gothere.ico",
   },

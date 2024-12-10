@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "../ui/button";
 
 const selectedItem = {
   id: 1,
@@ -37,9 +38,9 @@ export default function MarkerInfoModal() {
           <span className="text-text-primary/70">대전 서구 용문동</span>
         </div>
       </div>
-      <button className="bg-primary hover:bg-primary-hover text-white p-2 rounded-lg w-full font-semibold text-sm">
+      <Button className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm">
         자세히보기
-      </button>
+      </Button>
     </div>
   );
 }

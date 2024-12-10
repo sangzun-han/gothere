@@ -1,4 +1,4 @@
-import { findDongCooridnates } from "@/app/lib/api/find-dong-coordingates";
+import { findDongCooridnates } from "@/lib/api/find-dong-coordingates";
 import { transformCoordinates } from "./transform-coordinates";
 
 /**

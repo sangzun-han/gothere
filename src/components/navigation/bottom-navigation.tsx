@@ -14,7 +14,7 @@ export default function BottomNavigation() {
           href={item.path}
           key={item.label}
           className={`flex flex-col items-center mb-1 ${
-            pathname === item.path ? "text-primary font-bold" : "text-text-secondary/50 hover:text-primary"
+            pathname === item.path ? "text-brand-primary font-bold" : "text-text-secondary/50 hover:text-brand-primary"
           }`}
         >
           {item.icon}

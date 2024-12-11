@@ -3,12 +3,15 @@ import { Input } from "../ui/input";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import FileUploader from "./file-uploader";
 import { Textarea } from "../ui/textarea";
+import { Button } from "../ui/button";
+import { MapPin } from "lucide-react";
 
 export enum FormFieldType {
   INPUT = "INPUT",
   TEXTAREA = "TEXTAREA",
   SELECT = "SELECT",
   FILE = "FILE",
+  LOCATION = "LOCATION",
 }
 
 interface CustomFormFieldProps {
@@ -19,6 +22,7 @@ interface CustomFormFieldProps {
   placeholder?: string;
   onChange?: (value: string | File[]) => void;
   value?: any;
+  renderCustomField?: (props: { field: any; fieldState: any }) => React.ReactNode;
 }
 
 const renderField = (
@@ -37,6 +41,7 @@ const renderField = (
             field.onChange(e);
             onChange?.(e.target.value);
           }}
+          className="text-sm"
         />
       );
     case FormFieldType.TEXTAREA:
@@ -44,7 +49,7 @@ const renderField = (
         <Textarea
           placeholder={placeholder}
           {...field}
-          className="resize-none h-64"
+          className="resize-none h-48 text-sm"
           onChange={(e) => {
             field.onChange(e);
             onChange?.(e.target.value);
@@ -53,6 +58,18 @@ const renderField = (
       );
     case FormFieldType.FILE:
       return <FileUploader value={field.value || []} onChange={onChange || (() => {})} />;
+    case FormFieldType.LOCATION:
+      return (
+        <div className="relative">
+          <Input
+            readOnly
+            {...field}
+            placeholder={placeholder || "위치를 선택하세요"}
+            className="text-sm cursor-pointer"
+          />
+          <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-primary pointer-events-none" />
+        </div>
+      );
     default:
       return null;
   }
@@ -65,16 +82,20 @@ export default function CustomFormField({
   type,
   placeholder,
   onChange,
-  value,
+  renderCustomField,
 }: CustomFormFieldProps) {
   return (
     <Controller
       control={control}
       name={name}
       render={({ field, fieldState }) => (
-        <FormItem>
-          {label && <FormLabel>{label}</FormLabel>}
-          <FormControl>{renderField(type, field, placeholder, onChange)}</FormControl>
+        <FormItem className={type !== FormFieldType.FILE ? "mt-4" : ""}>
+          {label !== "이미지" && <FormLabel>{label}</FormLabel>}
+          <FormControl>
+            {renderCustomField
+              ? renderCustomField({ field, fieldState })
+              : renderField(type, field, placeholder, onChange)}
+          </FormControl>{" "}
           <FormMessage>{fieldState.error?.message}</FormMessage>
         </FormItem>
       )}

@@ -14,7 +14,7 @@ import { useMapZoom } from "@/hooks/kakao";
 import KakaoMapLoading from "./kakao-map-loading";
 
 export default function KakaoMapView() {
-  const { location, isLoading } = useGeoLocation();
+  const { location, isKakaoLoading } = useGeoLocation();
   const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
@@ -26,7 +26,7 @@ export default function KakaoMapView() {
     updateCenter({ lat: center.getLat(), lng: center.getLng() });
   };
 
-  if (isLoading) return <KakaoMapLoading />;
+  if (isKakaoLoading) return <KakaoMapLoading visible={true} />;
 
   return (
     <Map

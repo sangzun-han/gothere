@@ -6,3 +6,4 @@ export { default as ReturnToLocationButton } from "./return-to-location-button";
 export { default as MyMarker } from "./my-marker";
 export { default as UserMarker } from "./user-marker";
 export { default as MarkerInfoModal } from "./marker-info-modal";
+export { default as DialogKakao } from "./dialog-kakao";

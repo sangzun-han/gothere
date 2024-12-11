@@ -8,14 +8,14 @@ import { useKakaoLoader } from "../kakao";
 
 export default function useGeoLocation() {
   const [location, setLocation] = useRecoilState(geoLocationState);
-  const [isLoading, setIsLoading] = useRecoilState(geoLocationLoadingState);
+  const [isLocationLoading, setIsLocationLoading] = useRecoilState(geoLocationLoadingState);
   const [error, setError] = useRecoilState(geoLocationErrorState);
 
   const { loading: isKakaoLoading } = useKakaoLoader();
 
   useEffect(() => {
     const fetchInitialLocation = async () => {
-      setIsLoading(true);
+      setIsLocationLoading(true);
       setError(null);
 
       try {
@@ -24,18 +24,19 @@ export default function useGeoLocation() {
       } catch (error) {
         setError(error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.");
       } finally {
-        setIsLoading(false);
+        setIsLocationLoading(false);
       }
     };
 
     if (!isKakaoLoading) {
       fetchInitialLocation();
     }
-  }, [isKakaoLoading, setLocation, setIsLoading, setError]);
+  }, [isKakaoLoading, setLocation, setIsLocationLoading, setError]);
 
   return {
     location,
     error,
-    isLoading: isLoading || isKakaoLoading,
+    isLocationLoading: isLocationLoading,
+    isKakaoLoading: isKakaoLoading,
   };
 }

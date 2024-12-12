@@ -22,7 +22,6 @@ export default function FileUploader({ value, onChange }: FileUploaderProps) {
     }));
     setPreviewImages(newPreviewImages);
 
-    // 메모리 누수 방지를 위해 컴포넌트 언마운트 시 URL 해제
     return () => {
       newPreviewImages.forEach((preview) => URL.revokeObjectURL(preview.url));
     };

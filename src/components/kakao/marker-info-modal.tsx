@@ -1,5 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
+import { useRecoilValue } from "recoil";
+import { geoLocationState } from "@/recoil/location/atoms";
 
 const selectedItem = {
   id: 1,
@@ -11,6 +13,8 @@ const selectedItem = {
 };
 
 export default function MarkerInfoModal() {
+  const { addressName } = useRecoilValue(geoLocationState);
+
   return (
     <div className="absolute left-1/2 transform -translate-x-1/2 bottom-20 bg-white shadow-lg rounded-lg p-4 w-11/12 z-[999]">
       <button className="absolute top-2 right-3 text-text-secondary/50 hover:text-text-secondary text-lg font-bold">
@@ -35,7 +39,7 @@ export default function MarkerInfoModal() {
 
       <div className="flex items-center text-xs text-gray-500 mb-2">
         <div className="flex items-center">
-          <span className="text-text-primary/70">대전 서구 용문동</span>
+          <span className="text-text-primary/70">{addressName}</span>
         </div>
       </div>
       <Button className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm">

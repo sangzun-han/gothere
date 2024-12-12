@@ -28,6 +28,7 @@ export interface LocationData {
   si: string;
   gu: string;
   dong: string;
+  addressName: string;
 }
 
 /**
@@ -40,6 +41,7 @@ export interface LocationData {
  * - `si`: 시/도 이름.
  * - `gu`: 구 이름.
  * - `dong`: 동 이름.
+ * - `addressName`: 주소 전체 이름.
  *
  * @throws {Error} - 위치 데이터를 가져오는 중 발생할 수 있는 에러를 설명합니다.
  * - `PERMISSION_DENIED`: 사용자가 위치 정보 제공을 거부한 경우.
@@ -57,9 +59,9 @@ export const initializeLocation = async (): Promise<LocationData> => {
   try {
     const position = await getCurrentPosition();
     const { latitude, longitude } = position.coords;
-    const { si, gu, dong } = await getAdminDistrict(latitude, longitude);
+    const { si, gu, dong, addressName } = await getAdminDistrict(latitude, longitude);
 
-    return { latitude, longitude, si, gu, dong };
+    return { latitude, longitude, si, gu, dong, addressName };
   } catch (error) {
     const errorKey = error as LocationError;
     throw new Error(ERROR_MESSAGES[errorKey] || ERROR_MESSAGES.UNKNOWN_ERROR);

@@ -13,6 +13,11 @@ import { DialogKakao } from "@/components/kakao";
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { useState } from "react";
+import { ModalType } from "@/types/modals";
+import { LocationErrorDrawer } from "@/components/modal";
+import { useRecoilValue } from "recoil";
+import { geoLocationState } from "@/recoil/location/atoms";
+import { extractDong } from "@/utils/location/extract-dong";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
@@ -27,10 +32,24 @@ export default function Page() {
     },
   });
 
-  const [isDialogVisible, setDialogVisible] = useState(false);
+  const { addressName } = useRecoilValue(geoLocationState);
+  const [currentModal, setCurrentModal] = useState<ModalType>(ModalType.NONE);
 
-  const onSubmit = (values: any) => {
-    console.log("Form submitted:", values);
+  const handleLocationSelect = (location: string) => {
+    form.setValue("location", location);
+    setCurrentModal(ModalType.NONE);
+  };
+
+  const onSubmit = (values: PostFormValues) => {
+    const currentDong = extractDong(addressName);
+    const selectedDong = extractDong(values.location);
+
+    if (currentDong !== selectedDong) {
+      setCurrentModal(ModalType.CONFIRMATION);
+      return;
+    }
+
+    // API 요청
   };
 
   return (
@@ -51,11 +70,16 @@ export default function Page() {
               label="위치"
               type={FormFieldType.LOCATION}
               renderCustomField={({ field }) => (
-                <div className="relative" onClick={() => setDialogVisible(true)}>
+                <div className="relative" onClick={() => setCurrentModal(ModalType.KAKAOMAP)}>
                   <Input readOnly {...field} placeholder="위치를 선택하세요" className="text-sm cursor-pointer" />
                   <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-primary cursor-pointer" />
                 </div>
               )}
+            />
+            <DialogKakao
+              visible={currentModal === ModalType.KAKAOMAP}
+              onClose={() => setCurrentModal(ModalType.NONE)}
+              onSelect={handleLocationSelect}
             />
             <CustomFormField
               control={form.control}
@@ -77,10 +101,13 @@ export default function Page() {
               작성하기
             </Button>
           </footer>
+          <LocationErrorDrawer
+            visible={currentModal === ModalType.CONFIRMATION}
+            onClose={() => setCurrentModal(ModalType.NONE)}
+            selectedAddressName={form.getValues("location")}
+          />
         </form>
       </Form>
-
-      <DialogKakao visible={isDialogVisible} onClose={() => setDialogVisible(false)} />
     </>
   );
 }

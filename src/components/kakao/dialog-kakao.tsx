@@ -11,14 +11,40 @@ import KakaoMapLoading from "./kakao-map-loading";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { getAdminDistrict } from "@/utils/location/get-admin-district";
 
-export default function DialogKakao({ visible, onClose }: { visible: boolean; onClose: () => void }) {
+export default function DialogKakao({
+  visible,
+  onClose,
+  onSelect,
+}: {
+  visible: boolean;
+  onClose: () => void;
+  onSelect: (location: string) => void;
+}) {
   const { location, isKakaoLoading } = useGeoLocation();
   const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
     lng: location.longitude,
   });
+
+  const [addressName, setAddressName] = useState(location.addressName);
+
+  const handleCenterChange = async (lat: number, lng: number) => {
+    const adminDistrict = await getAdminDistrict(lat, lng);
+    setAddressName(adminDistrict.addressName);
+  };
+
+  const handleReturnToInitialLocation = () => {
+    returnToInitialLocation();
+    setAddressName(location.addressName);
+  };
+
+  useEffect(() => {
+    setAddressName(location.addressName);
+  }, [location.addressName]);
 
   if (isKakaoLoading) return <KakaoMapLoading visible={false} />;
 
@@ -33,13 +59,17 @@ export default function DialogKakao({ visible, onClose }: { visible: boolean; on
           level={zoomLevel}
           onCenterChanged={(map) => {
             const center = map.getCenter();
-            updateCenter({ lat: center.getLat(), lng: center.getLng() });
+            const newLat = center.getLat();
+            const newLng = center.getLng();
+
+            updateCenter({ lat: newLat, lng: newLng });
+            handleCenterChange(newLat, newLng);
           }}
         >
-          <MyMarker latitude={location.latitude} longitude={location.longitude} />
+          <MyMarker latitude={currentCenter.lat} longitude={currentCenter.lng} />
           <KakaoPolygon />
           <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
-          <ReturnToLocationButton onClick={returnToInitialLocation} position="BOTTOMRIGHT" />
+          <ReturnToLocationButton onClick={handleReturnToInitialLocation} position="BOTTOMLEFT" />
           <div className="absolute top-4 right-4 z-50">
             <Button
               onClick={onClose}
@@ -48,6 +78,21 @@ export default function DialogKakao({ visible, onClose }: { visible: boolean; on
               size="icon"
             >
               <X className="w-4 h-4 text-text-primary" />
+            </Button>
+          </div>
+          <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 bg-white shadow-lg rounded-lg p-4 w-11/12 z-[999]">
+            <h2 className="text-lg font-bold text-text-primary">장소는 여기!</h2>
+
+            <div className="flex items-center text-xs text-gray-500 mb-2">
+              <div className="flex items-center">
+                <span className="text-text-primary/70">{addressName}</span>
+              </div>
+            </div>
+            <Button
+              className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm"
+              onClick={() => onSelect(addressName)}
+            >
+              이 위치로 하기
             </Button>
           </div>
         </Map>

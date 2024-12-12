@@ -6,6 +6,7 @@ type LocationType = {
   si: string;
   gu: string;
   dong: string;
+  addressName: string;
 };
 
 export const geoLocationState = atom<LocationType>({
@@ -16,6 +17,7 @@ export const geoLocationState = atom<LocationType>({
     si: "서울특별시",
     gu: "종로구",
     dong: "청운효자동",
+    addressName: "서울특별시 종로구 청운효자동",
   },
 });
 

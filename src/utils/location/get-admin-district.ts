@@ -2,6 +2,7 @@ type AdminDistrict = {
   si: string;
   gu: string;
   dong: string;
+  addressName: string; // 전체 주소
 };
 
 /**
@@ -28,6 +29,7 @@ export const getAdminDistrict = async (latitude: number, longitude: number): Pro
           const address = result[0]?.address;
           if (address) {
             resolve({
+              addressName: address.address_name,
               si: address.region_1depth_name,
               gu: address.region_2depth_name,
               dong: address.region_3depth_name,

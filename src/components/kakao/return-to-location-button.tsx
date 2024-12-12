@@ -3,11 +3,11 @@ import { Button } from "../ui/button";
 
 interface ReturnToLocationButtonProps {
   onClick: () => void;
-  position?: "TOPRIGHT" | "BOTTOMRIGHT";
+  position?: "TOPRIGHT" | "BOTTOMLEFT";
 }
 
 export default function ReturnToLocationButton({ onClick, position = "TOPRIGHT" }: ReturnToLocationButtonProps) {
-  const positionClass = position === "TOPRIGHT" ? "top-4 right-4" : "bottom-4 right-4";
+  const positionClass = position === "TOPRIGHT" ? "top-4 right-4" : "bottom-40 left-4";
 
   return (
     <div className={`absolute ${positionClass} flex flex-col gap-2 z-50`}>

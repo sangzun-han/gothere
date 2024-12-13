@@ -8,7 +8,6 @@ export default function NearbyFallback() {
       </header>
 
       <section className="space-y-6">
-        {/* 예: 5개 정도의 스켈레톤 LetterItemFallback 렌더링 */}
         {Array.from({ length: 5 }).map((_, i) => (
           <article
             className="relative bg-white rounded-lg shadow-lg p-6 border-2 border-dashed border-gray-300 transform transition hover:rotate-1 hover:scale-[1.02]"

@@ -8,7 +8,6 @@ export const locationSelector = selector({
       const location = await initializeLocation();
       return location;
     } catch (error) {
-      console.log(error);
       return {
         latitude: 37.579293849225756,
         longitude: 126.97798076343491,

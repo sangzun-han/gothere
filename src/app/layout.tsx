@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import RecoilProvider from "@/providers/recoil-provider";
+import KakaoLoaderProvider from "@/providers/kakao-loader-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} overflow-auto`}>
-        <RecoilProvider>{children}</RecoilProvider>
+        <RecoilProvider>
+          <KakaoLoaderProvider>{children}</KakaoLoaderProvider>
+        </RecoilProvider>
       </body>
     </html>
   );

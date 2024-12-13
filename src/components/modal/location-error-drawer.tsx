@@ -2,14 +2,13 @@
 
 import { Button } from "../ui/button";
 import { useRecoilValue } from "recoil";
-import { geoLocationState } from "@/recoil/location/atoms";
 import { Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerTitle } from "../ui/drawer";
 import { MapPin } from "lucide-react";
 import { Map, MapMarker } from "react-kakao-maps-sdk";
-import { useKakaoLoader } from "@/hooks/kakao";
 import { getCoordsFromAddress } from "@/utils/location/get-coords-from-address";
 import { useEffect, useState } from "react";
 import { MyMarker } from "../kakao";
+import { locationSelector } from "@/recoil/location/selector";
 
 interface ConfirmationModalProps {
   visible: boolean;
@@ -18,14 +17,13 @@ interface ConfirmationModalProps {
 }
 
 export default function LocationErrorDrawer({ visible, onClose, selectedAddressName }: ConfirmationModalProps) {
-  const { loading } = useKakaoLoader();
-  const { addressName } = useRecoilValue(geoLocationState);
+  const { addressName } = useRecoilValue(locationSelector);
 
   const [currentCoords, setCurrentCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [selectedCoords, setSelectedCoords] = useState<{ lat: number; lng: number } | null>(null);
 
   useEffect(() => {
-    if (visible && !loading) {
+    if (visible) {
       getCoordsFromAddress(addressName)
         .then((coords) => setCurrentCoords(coords))
         .catch((error) => console.error("Failed to fetch current location coords:", error));
@@ -34,9 +32,9 @@ export default function LocationErrorDrawer({ visible, onClose, selectedAddressN
         .then((coords) => setSelectedCoords(coords))
         .catch((error) => console.error("Failed to fetch selected location coords:", error));
     }
-  }, [visible, loading, addressName, selectedAddressName]);
+  }, [visible, addressName, selectedAddressName]);
 
-  if (loading || !currentCoords || !selectedCoords) {
+  if (!currentCoords || !selectedCoords) {
     return null;
   }
 
@@ -48,9 +46,9 @@ export default function LocationErrorDrawer({ visible, onClose, selectedAddressN
           <DrawerDescription hidden></DrawerDescription>
           <p className="flex items-center space-x-2">
             <MapPin className="w-4 h-4 text-text-primary" />
-            <span className="text-sm font-medium text-text-primary">{selectedAddressName}에서</span>
+            <span className="text-sm font-medium text-text-primary">{addressName}에서</span>
           </p>
-          <span className="text-xs font-medium text-text-secondary">{addressName}</span>
+          <span className="text-xs font-medium text-text-secondary">{selectedAddressName}</span>
         </div>
 
         <div className="flex-grow relative">

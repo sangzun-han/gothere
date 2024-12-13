@@ -1,18 +1,19 @@
 "use client";
 
 import { useMapZoom } from "@/hooks/kakao";
-import { useGeoLocation, useMapCenter } from "@/hooks/location";
+import { useMapCenter } from "@/hooks/location";
 import { Map } from "react-kakao-maps-sdk";
 import MyMarker from "./my-marker";
 import KakaoPolygon from "./kakao-polygon";
 import MapZoomControl from "./map-zoom-control";
 import ReturnToLocationButton from "./return-to-location-button";
-import KakaoMapLoading from "./kakao-map-loading";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { getAdminDistrict } from "@/utils/location/get-admin-district";
+import { useRecoilValue } from "recoil";
+import { locationSelector } from "@/recoil/location/selector";
 
 export default function DialogKakao({
   visible,
@@ -23,7 +24,7 @@ export default function DialogKakao({
   onClose: () => void;
   onSelect: (location: string) => void;
 }) {
-  const { location, isKakaoLoading } = useGeoLocation();
+  const location = useRecoilValue(locationSelector);
   const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
@@ -45,8 +46,6 @@ export default function DialogKakao({
   useEffect(() => {
     setAddressName(location.addressName);
   }, [location.addressName]);
-
-  if (isKakaoLoading) return <KakaoMapLoading visible={false} />;
 
   return (
     <Dialog open={visible}>

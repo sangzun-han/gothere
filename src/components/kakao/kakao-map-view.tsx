@@ -9,12 +9,13 @@ import {
   MyMarker,
   MarkerInfoModal,
 } from "@/components/kakao";
-import { useGeoLocation, useMapCenter } from "@/hooks/location";
+import { useMapCenter } from "@/hooks/location";
 import { useMapZoom } from "@/hooks/kakao";
-import KakaoMapLoading from "./kakao-map-loading";
+import { locationSelector } from "@/recoil/location/selector";
+import { useRecoilValue } from "recoil";
 
 export default function KakaoMapView() {
-  const { location, isKakaoLoading } = useGeoLocation();
+  const location = useRecoilValue(locationSelector);
   const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
@@ -26,8 +27,6 @@ export default function KakaoMapView() {
     updateCenter({ lat: center.getLat(), lng: center.getLng() });
   };
 
-  if (isKakaoLoading) return <KakaoMapLoading visible={true} />;
-
   return (
     <Map
       center={currentCenter}
@@ -37,7 +36,7 @@ export default function KakaoMapView() {
     >
       <MyMarker latitude={location.latitude} longitude={location.longitude} />
       <UserMarker />
-      <MarkerInfoModal />
+      <MarkerInfoModal addressName={location.addressName} />
       <KakaoPolygon />
       <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
       <ReturnToLocationButton onClick={returnToInitialLocation} />

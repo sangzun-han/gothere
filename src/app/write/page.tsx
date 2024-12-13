@@ -16,8 +16,8 @@ import { useState } from "react";
 import { ModalType } from "@/types/modals";
 import { LocationErrorDrawer } from "@/components/modal";
 import { useRecoilValue } from "recoil";
-import { geoLocationState } from "@/recoil/location/atoms";
 import { extractDong } from "@/utils/location/extract-dong";
+import { locationSelector } from "@/recoil/location/selector";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
@@ -32,8 +32,8 @@ export default function Page() {
     },
   });
 
-  const { addressName } = useRecoilValue(geoLocationState);
-  const [currentModal, setCurrentModal] = useState<ModalType>(ModalType.NONE);
+  const location = useRecoilValue(locationSelector);
+  const [currentModal, setCurrentModal] = useState<ModalType>(ModalType.KAKAOMAP);
 
   const handleLocationSelect = (location: string) => {
     form.setValue("location", location);
@@ -41,7 +41,7 @@ export default function Page() {
   };
 
   const onSubmit = (values: PostFormValues) => {
-    const currentDong = extractDong(addressName);
+    const currentDong = extractDong(location.addressName);
     const selectedDong = extractDong(values.location);
 
     if (currentDong !== selectedDong) {

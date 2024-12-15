@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 
 interface LetterItemProps {
   item: {
@@ -14,7 +15,6 @@ interface LetterItemProps {
     image: string;
   };
 }
-
 export default function LetterItem({ item }: LetterItemProps) {
   return (
     <article className="relative bg-white rounded-lg shadow-lg p-6 border-2 border-dashed border-gray-300 transform transition hover:rotate-1 hover:scale-[1.02]">
@@ -29,14 +29,16 @@ export default function LetterItem({ item }: LetterItemProps) {
         <figcaption className="absolute -top-2 -left-2 w-4 h-4 bg-brand-primary rounded-full"></figcaption>
       </figure>
 
-      <section className="pr-16 text-gray-900 space-y-2">
-        <h2 className="text-xl font-bold text-text-primary underline decoration-wavy decoration-gray-500">
-          {item.title}
-        </h2>
-        <p className="text-base text-text-secondary italic border-l-4 border-gray-300 pl-3 line-clamp-3">
-          {item.content}
-        </p>
-      </section>
+      <Link href="/nearby/1">
+        <section className="pr-16 text-gray-900 space-y-2">
+          <h2 className="text-xl font-bold text-text-primary underline decoration-wavy decoration-gray-500">
+            {item.title}
+          </h2>
+          <p className="text-base text-text-secondary italic border-l-4 border-gray-300 pl-3 line-clamp-3">
+            {item.content}
+          </p>
+        </section>
+      </Link>
 
       <footer className="flex justify-between items-end mt-4">
         <time className="text-sm text-gray-500 italic">🗓 2024/12/12</time>

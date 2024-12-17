@@ -16,11 +16,9 @@ export default function LetterContent() {
         </h1>
       </header>
 
-      <section className="space-y-6">
-        {sampleData.map((item) => (
-          <LetterItem key={item.id} item={item} />
-        ))}
-      </section>
+      {sampleData.map((item) => (
+        <LetterItem key={item.id} item={item} />
+      ))}
     </article>
   );
 }

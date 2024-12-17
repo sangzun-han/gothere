@@ -18,6 +18,8 @@ import { LocationErrorDrawer } from "@/components/modal";
 import { useRecoilValue } from "recoil";
 import { extractDong } from "@/utils/location/extract-dong";
 import { locationSelector } from "@/recoil/location/selector";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 

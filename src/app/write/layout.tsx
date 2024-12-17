@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+
   return (
     <div className="w-full flex flex-col min-h-screen bg-white">
       <header className="w-full flex items-center px-2 border-b border-gray-300 h-[52px] max-h-[52px]">

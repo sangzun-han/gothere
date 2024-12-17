@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import RecoilProvider from "@/providers/recoil-provider";
 import KakaoLoaderProvider from "@/providers/kakao-loader-provider";
+import AuthSessionProvider from "@/providers/session-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} overflow-auto`}>
         <RecoilProvider>
-          <KakaoLoaderProvider>{children}</KakaoLoaderProvider>
+          <KakaoLoaderProvider>
+            <AuthSessionProvider>{children}</AuthSessionProvider>
+          </KakaoLoaderProvider>
         </RecoilProvider>
       </body>
     </html>

@@ -1,24 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowLeft, CircleDot, MapPin } from "lucide-react";
+import { ArrowLeft, MapPin } from "lucide-react";
 import { Map } from "react-kakao-maps-sdk";
 import { Button } from "@/components/ui/button";
 
 interface LetterDetailProps {
-  item: {
-    id: number;
-    title: string;
-    username: string;
-    description: string;
-    lat: number;
-    lng: number;
-    content: string;
-    image: string;
-    date: string;
-    location1: string;
-    location2: string;
-  };
+  params: { id: string }; // URL 매개변수 타입
 }
 
 const hardcodedItem = {
@@ -36,7 +24,8 @@ const hardcodedItem = {
   location2: "강릉 안목해변",
 };
 
-export default function LetterDetail({ item = hardcodedItem }: LetterDetailProps) {
+export default function LetterDetail({ params }: LetterDetailProps) {
+  const item = hardcodedItem;
   return (
     <article className="bg-white">
       <header className="w-full flex items-center px-2 border-b border-gray-300 h-[52px] max-h-[52px]">

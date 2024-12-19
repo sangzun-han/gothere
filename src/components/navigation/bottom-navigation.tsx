@@ -3,11 +3,9 @@
 import { NAV_ITEMS } from "@/constants/nav-items";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import useRequireAuth from "@/hooks/auth/use-require-auth";
 
 export default function BottomNavigation() {
   const pathname = usePathname();
-  const { checkAuth, LoginRequiredModal } = useRequireAuth();
 
   return (
     <>
@@ -17,10 +15,6 @@ export default function BottomNavigation() {
             <Link
               href={item.path}
               key={item.label}
-              onClick={(e) => {
-                e.preventDefault();
-                checkAuth(item.path);
-              }}
               className={`flex flex-col items-center mb-1 ${
                 pathname === item.path
                   ? "text-brand-primary font-bold"
@@ -33,7 +27,6 @@ export default function BottomNavigation() {
           ))}
         </div>
       </nav>
-      {LoginRequiredModal}
     </>
   );
 }

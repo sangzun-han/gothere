@@ -22,7 +22,7 @@ export default function DialogKakao({
 }: {
   visible: boolean;
   onClose: () => void;
-  onSelect: (location: string) => void;
+  onSelect: (location: { addressName: string; latitude: number; longitude: number }) => void;
 }) {
   const location = useRecoilValue(locationSelector);
   const { zoomLevel, adjustZoom } = useMapZoom();
@@ -89,7 +89,13 @@ export default function DialogKakao({
             </div>
             <Button
               className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm"
-              onClick={() => onSelect(addressName)}
+              onClick={() =>
+                onSelect({
+                  addressName,
+                  latitude: currentCenter.lat,
+                  longitude: currentCenter.lng,
+                })
+              }
             >
               이 위치로 하기
             </Button>

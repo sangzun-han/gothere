@@ -3,7 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import RecoilProvider from "@/providers/recoil-provider";
 import KakaoLoaderProvider from "@/providers/kakao-loader-provider";
-import AuthSessionProvider from "@/providers/session-provider";
+import BottomNavigation from "@/components/navigation/bottom-navigation";
+import { getIsLogin } from "@/utils/supabase/server";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,17 +16,20 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const isLoggedIn = await getIsLogin();
+
   return (
     <html lang="en">
       <body className={`${inter.className} overflow-auto`}>
         <RecoilProvider>
           <KakaoLoaderProvider>
-            <AuthSessionProvider>{children}</AuthSessionProvider>
+            {children}
+            <BottomNavigation isLoggedIn={isLoggedIn} />
           </KakaoLoaderProvider>
         </RecoilProvider>
       </body>

@@ -1,3 +1,5 @@
+"use client";
+
 import { Polygon } from "react-kakao-maps-sdk";
 import { useGetPolygonPaths } from "@/hooks/coordinates";
 

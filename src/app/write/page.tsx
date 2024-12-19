@@ -8,7 +8,6 @@ import { PostFormValidation } from "@/schemas/post-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
 import { DialogKakao } from "@/components/kakao";
 import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
@@ -18,8 +17,6 @@ import { LocationErrorDrawer } from "@/components/modal";
 import { useRecoilValue } from "recoil";
 import { extractDong } from "@/utils/location/extract-dong";
 import { locationSelector } from "@/recoil/location/selector";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
@@ -31,14 +28,18 @@ export default function Page() {
       content: "",
       images: [],
       location: "",
+      latitude: 0,
+      longitude: 0,
     },
   });
 
   const location = useRecoilValue(locationSelector);
   const [currentModal, setCurrentModal] = useState<ModalType>(ModalType.KAKAOMAP);
 
-  const handleLocationSelect = (location: string) => {
-    form.setValue("location", location);
+  const handleLocationSelect = (location: { addressName: string; latitude: number; longitude: number }) => {
+    form.setValue("location", location.addressName);
+    form.setValue("latitude", location.latitude);
+    form.setValue("longitude", location.longitude);
     setCurrentModal(ModalType.NONE);
   };
 

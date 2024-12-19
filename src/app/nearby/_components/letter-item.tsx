@@ -1,6 +1,3 @@
-"use client";
-
-import useRequireAuth from "@/hooks/auth/use-require-auth";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -18,16 +15,9 @@ interface LetterItemProps {
 }
 
 export default function LetterItem({ item }: LetterItemProps) {
-  const { checkAuth, LoginRequiredModal } = useRequireAuth();
-
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, path: string) => {
-    e.preventDefault();
-    checkAuth(path);
-  };
-
   return (
     <div className="mb-4">
-      <Link href={`/nearby/${item.id}`} onClick={(e) => handleLinkClick(e, `/nearby/${item.id}`)}>
+      <Link href={`/nearby/${item.id}`}>
         <article className="relative bg-white rounded-lg shadow-lg p-6 border-2 border-dashed border-gray-300 transform transition hover:rotate-1 hover:scale-[1.02] cursor-pointer">
           <figure className="absolute top-4 right-4 w-16 h-16 rounded-lg border-2 border-gray-400 p-1 bg-white shadow-md rotate-6">
             <Image
@@ -61,8 +51,6 @@ export default function LetterItem({ item }: LetterItemProps) {
           ></div>
         </article>
       </Link>
-
-      {LoginRequiredModal}
     </div>
   );
 }

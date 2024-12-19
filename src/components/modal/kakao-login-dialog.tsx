@@ -11,9 +11,9 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
-import { signIn } from "next-auth/react";
 import Image from "next/image";
 import { useMediaQuery } from "@/hooks/media";
+import browserClient from "@/utils/supabase/client";
 
 interface KakaoLoginDialogProps {
   isOpen: boolean;
@@ -53,12 +53,21 @@ export default function KakaoLoginDialog({ isOpen, onClose }: KakaoLoginDialogPr
 }
 
 function LoginContent({ onClose }: { onClose: () => void }) {
+  const signInWithSocial = async () => {
+    await browserClient.auth.signInWithOAuth({
+      provider: "kakao",
+      options: {
+        redirectTo: `http://localhost:3000/auth/callback`,
+      },
+    });
+  };
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <Button
         className="relative w-full flex items-center justify-center p-4 border border-transparent text-base font-bold rounded-md text-black bg-[#FEE500] hover:bg-[#FEE500]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#FEE500]"
         size="lg"
-        onClick={() => signIn("kakao")}
+        onClick={signInWithSocial}
       >
         <Image src="/kakao-icon.svg" alt="카카오 로고" className="w-5 h-5 mr-2" width={20} height={20} />
         카카오로 로그인하기

@@ -10,17 +10,23 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { DialogKakao } from "@/components/kakao";
 import { Input } from "@/components/ui/input";
-import { MapPin } from "lucide-react";
+import { CookingPot, MapPin } from "lucide-react";
 import { useState } from "react";
 import { ModalType } from "@/types/modals";
 import { LocationErrorDrawer } from "@/components/modal";
 import { useRecoilValue } from "recoil";
 import { extractDong } from "@/utils/location/extract-dong";
 import { locationSelector } from "@/recoil/location/selector";
+import { createPost } from "@/lib/api/posts/create";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
 export default function Page() {
+  const router = useRouter();
+  const { toast } = useToast();
+
   const form = useForm<PostFormValues>({
     resolver: zodResolver(PostFormValidation),
     defaultValues: {
@@ -35,6 +41,7 @@ export default function Page() {
 
   const location = useRecoilValue(locationSelector);
   const [currentModal, setCurrentModal] = useState<ModalType>(ModalType.KAKAOMAP);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLocationSelect = (location: { addressName: string; latitude: number; longitude: number }) => {
     form.setValue("location", location.addressName);
@@ -43,16 +50,33 @@ export default function Page() {
     setCurrentModal(ModalType.NONE);
   };
 
-  const onSubmit = (values: PostFormValues) => {
-    const currentDong = extractDong(location.addressName);
-    const selectedDong = extractDong(values.location);
+  const onSubmit = async (values: PostFormValues) => {
+    setIsLoading(true);
+    try {
+      const currentDong = extractDong(location.addressName);
+      const selectedDong = extractDong(values.location);
+      if (currentDong !== selectedDong) {
+        setCurrentModal(ModalType.CONFIRMATION);
+        return;
+      }
 
-    if (currentDong !== selectedDong) {
-      setCurrentModal(ModalType.CONFIRMATION);
-      return;
+      await createPost(values);
+      toast({
+        title: "작성 완료",
+        description: "성공적으로 작성되었습니다.",
+        duration: 1000,
+      });
+      router.push("/");
+    } catch (error) {
+      toast({
+        title: "작성 실패",
+        description: error instanceof Error ? error.message : "알 수 없는 오류가 발생했습니다.",
+        variant: "destructive",
+        duration: 1000,
+      });
+    } finally {
+      setIsLoading(false);
     }
-
-    // API 요청
   };
 
   return (
@@ -100,8 +124,18 @@ export default function Page() {
             />
           </div>
           <footer className="fixed bottom-0 w-full bg-white border-t border-gray-300 px-4 py-3">
-            <Button type="submit" className="w-full bg-brand-primary hover:bg-brand-hover text-white border-none">
-              작성하기
+            <Button
+              type="submit"
+              className={`w-full ${
+                isLoading ? "bg-brand-primary/70 cursor-not-allowed" : "bg-brand-primary hover:bg-brand-hover"
+              } text-white border-none`}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full border-t-transparent" />
+              ) : (
+                "작성하기"
+              )}
             </Button>
           </footer>
           <LocationErrorDrawer

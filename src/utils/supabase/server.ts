@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-export const createClient = () => {
+export const createClient = async () => {
   const cookieStore = cookies();
 
   return createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, {
@@ -22,12 +22,4 @@ export const createClient = () => {
       },
     },
   });
-};
-
-export const getIsLogin = async () => {
-  const serverClient = createClient();
-  const {
-    data: { session },
-  } = await serverClient.auth.getSession();
-  return !!session;
 };

@@ -41,7 +41,7 @@ export default function FileUploader({ value, onChange }: FileUploaderProps) {
   };
 
   return (
-    <div className="flex items-center space-x-4 py-4 overflow-x-auto">
+    <div className="flex items-center space-x-4 mt-4 overflow-x-auto">
       {/* 업로드 버튼 */}
       <FormLabel
         htmlFor="upload"

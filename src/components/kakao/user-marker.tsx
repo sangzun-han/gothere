@@ -1,8 +1,14 @@
+"use client";
+
 import { sampleData } from "@/constants/data";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 import Image from "next/image";
+import { useRecoilValue } from "recoil";
+import { locationSelector } from "@/recoil/location/selector";
 
 export default function UserMarker() {
+  const location = useRecoilValue(locationSelector);
+
   return (
     <>
       {sampleData.map((item) => (

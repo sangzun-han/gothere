@@ -17,7 +17,8 @@
 /build
 
 /public/dong.json
-
+/public/test
+/src/app/api/bulk
 # misc
 .DS_Store
 *.pem

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { PostFormValidation } from "@/schemas/post-schema";
 import { createClient } from "@/utils/supabase/server";
 import { ZodError } from "zod";
+import { getBlurImg } from "@/utils/image/get-blur-image";
 
 interface ApiResponse {
   success: boolean;
@@ -77,6 +78,12 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
     const validatedData = PostFormValidation.parse(postData);
     const imageUrls = await uploadImages(postData.images, user.id);
 
+    let blurImage: string | undefined = undefined;
+    if (imageUrls.length > 0) {
+      const firstImg = imageUrls[0];
+      blurImage = await getBlurImg(firstImg);
+    }
+
     const { error: saveError } = await supabase.from("posts").insert({
       user_id: user.id,
       title: validatedData.title,
@@ -84,7 +91,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
       location: validatedData.location,
       latitude: validatedData.latitude,
       longitude: validatedData.longitude,
-      images: JSON.stringify(imageUrls),
+      images: imageUrls,
+      thumbnail_blur_image: blurImage,
     });
 
     if (saveError) {

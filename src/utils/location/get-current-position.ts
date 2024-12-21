@@ -35,9 +35,9 @@ export const getCurrentPosition = (): Promise<GeolocationPosition> => {
         reject(new Error(errorMessages[error.code] || "UNKNOWN_ERROR"));
       },
       {
-        enableHighAccuracy: false,
-        timeout: 50000,
-        maximumAge: 60000,
+        enableHighAccuracy: true,
+        timeout: 30000,
+        maximumAge: 0,
       }
     );
   });

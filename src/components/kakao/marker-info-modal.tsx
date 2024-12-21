@@ -1,44 +1,34 @@
+import React from "react";
 import Image from "next/image";
+import { Post } from "@/types/posts/posts";
 import { Button } from "../ui/button";
 
-const selectedItem = {
-  id: 1,
-  title: "사용자이름",
-  description: "제목",
-  lat: 36.3408,
-  lng: 127.3935,
-  image: "https://via.placeholder.com/100",
-};
+interface MarkerInfoModalProps {
+  post: Post;
+}
 
-export default function MarkerInfoModal({ addressName }: { addressName: string }) {
+export default function MarkerInfoModal({ post }: MarkerInfoModalProps) {
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/2 bottom-20 bg-white shadow-lg rounded-lg p-4 w-11/12 z-[999]">
-      <button className="absolute top-2 right-3 text-text-secondary/50 hover:text-text-secondary text-lg font-bold">
-        ×
-      </button>
-      <div className="flex items-center mb-3">
+    <div className="bg-white p-4">
+      <div className="flex items-center mb-4">
         <div className="w-14 h-14 rounded-full overflow-hidden mr-4">
           <Image
-            src={selectedItem.image || "https://via.placeholder.com/100"}
-            alt={selectedItem.title}
-            className="object-cover w-full h-full"
+            src={post.thumbnail || "https://via.placeholder.com/56"}
+            alt={post.title}
             width={56}
             height={56}
+            className="object-cover w-full h-full"
+            blurDataURL={post.thumbnail_blur_image}
+            placeholder="blur"
           />
         </div>
-
         <div>
-          <h2 className="text-lg font-bold text-text-primary">{selectedItem.title}</h2>
-          <p className="text-sm text-text-secondary/50">{selectedItem.description}</p>
+          <h2 className="text-lg font-bold">{post.title}</h2>
+          <p className="text-sm text-gray-500 line-clamp-1 whitespace-nowrap text-ellipsis">{post.content}</p>
         </div>
       </div>
-
-      <div className="flex items-center text-xs text-gray-500 mb-2">
-        <div className="flex items-center">
-          <span className="text-text-primary/70">{addressName}</span>
-        </div>
-      </div>
-      <Button className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm">
+      <div className="text-sm text-gray-500 mb-4">{post.location}</div>
+      <Button className="bg-brand-primary hover:bg-brand-hover text-white w-full py-2 rounded-lg text-sm font-semibold">
         자세히보기
       </Button>
     </div>

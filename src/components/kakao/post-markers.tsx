@@ -1,9 +1,9 @@
-import { Post } from "@/types/posts/posts";
+import { GeoPost } from "@/types/posts/posts";
 import Image from "next/image";
 import { CustomOverlayMap, MarkerClusterer } from "react-kakao-maps-sdk";
 
 interface PostMarkersProps {
-  geoPosts: Post[];
+  geoPosts: GeoPost[];
   onPostClick: (index: number) => void;
 }
 

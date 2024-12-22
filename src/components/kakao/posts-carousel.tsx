@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Post } from "@/types/posts/posts";
+import { GeoPost } from "@/types/posts/posts";
 import { Button } from "../ui/button";
 import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "../ui/carousel";
 import MarkerInfoModal from "./marker-info-modal";
 
 interface PostsCarouselProps {
-  geoPosts: Post[] | [];
+  geoPosts: GeoPost[] | [];
   dong: string;
   selectedPostIndex: number;
 }

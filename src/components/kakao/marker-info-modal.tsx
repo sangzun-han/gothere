@@ -1,16 +1,16 @@
 import React from "react";
 import Image from "next/image";
-import { Post } from "@/types/posts/posts";
+import { GeoPost } from "@/types/posts/posts";
 import { Button } from "../ui/button";
 
 interface MarkerInfoModalProps {
-  post: Post;
+  post: GeoPost;
 }
 
 export default function MarkerInfoModal({ post }: MarkerInfoModalProps) {
   return (
-    <div className="bg-white p-4">
-      <div className="flex items-center mb-4">
+    <div className="bg-white p-4 rounded-sm">
+      <div className="flex items-center mb-4 min-w-0">
         <div className="w-14 h-14 rounded-full overflow-hidden mr-4">
           <Image
             src={post.thumbnail || "https://via.placeholder.com/56"}
@@ -22,11 +22,13 @@ export default function MarkerInfoModal({ post }: MarkerInfoModalProps) {
             placeholder="blur"
           />
         </div>
-        <div>
-          <h2 className="text-lg font-bold">{post.title}</h2>
-          <p className="text-sm text-gray-500 line-clamp-1 whitespace-nowrap text-ellipsis">{post.content}</p>
+
+        <div className="flex-1 min-w-0">
+          <h2 className="text-lg font-bold truncate">{post.title}</h2>
+          <p className="text-sm text-gray-500 truncate">{post.content}</p>
         </div>
       </div>
+
       <div className="text-sm text-gray-500 mb-4">{post.location}</div>
       <Button className="bg-brand-primary hover:bg-brand-hover text-white w-full py-2 rounded-lg text-sm font-semibold">
         자세히보기

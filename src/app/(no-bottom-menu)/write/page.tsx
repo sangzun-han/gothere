@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { DialogKakao } from "@/components/kakao";
 import { Input } from "@/components/ui/input";
-import { CookingPot, MapPin } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { useState } from "react";
 import { ModalType } from "@/types/modals";
 import { LocationErrorDrawer } from "@/components/modal";

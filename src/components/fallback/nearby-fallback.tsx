@@ -1,16 +1,10 @@
 export default function NearbyFallback() {
   return (
-    <article className="bg-white p-4 min-h-screen font-['Nanum_Pen_Script']">
-      <header>
-        <h1 className="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-dashed border-gray-400 pb-2">
-          <div className="w-1/2 h-6 bg-gray-200 animate-pulse rounded" />
-        </h1>
-      </header>
-
+    <article className="bg-white p-4 min-h-screen">
       <section className="space-y-6">
         {Array.from({ length: 5 }).map((_, i) => (
           <article
-            className="relative bg-white rounded-lg shadow-lg p-6 border-2 border-dashed border-gray-300 transform transition hover:rotate-1 hover:scale-[1.02]"
+            className="relative bg-white rounded-lg shadow-lg p-6 transform transition hover:rotate-1 hover:scale-[1.02]"
             key={i}
           >
             <figure className="absolute top-4 right-4 w-16 h-16 rounded-lg border-2 border-gray-400 p-1 bg-white shadow-md rotate-6 flex items-center justify-center">

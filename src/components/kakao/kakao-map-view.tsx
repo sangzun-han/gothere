@@ -5,14 +5,17 @@ import {
   KakaoPolygon,
   MapZoomControl,
   ReturnToLocationButton,
-  UserMarker,
   MyMarker,
-  MarkerInfoModal,
+  PostMarkers,
+  PostsCarousel,
 } from "@/components/kakao";
 import { useMapCenter } from "@/hooks/location";
 import { useMapZoom } from "@/hooks/kakao";
 import { locationSelector } from "@/recoil/location/selector";
 import { useRecoilValue } from "recoil";
+import { usePostsBytLocation } from "@/lib/api/posts/hooks";
+import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
+import { useState } from "react";
 
 export default function KakaoMapView() {
   const location = useRecoilValue(locationSelector);
@@ -22,10 +25,19 @@ export default function KakaoMapView() {
     lng: location.longitude,
   });
 
+  const [selectedPostIndex, setSelectedPostIndex] = useState(0);
+
+  const handlePostClick = (index: number) => {
+    setSelectedPostIndex(index);
+  };
+
   const handleCenterChanged = (map: kakao.maps.Map) => {
     const center = map.getCenter();
     updateCenter({ lat: center.getLat(), lng: center.getLng() });
   };
+
+  const { data: geoPosts } = usePostsBytLocation(location.dong);
+  const { data: polygonPaths } = usePolygonCoordinates(location.dong);
 
   return (
     <Map
@@ -35,9 +47,9 @@ export default function KakaoMapView() {
       onCenterChanged={handleCenterChanged}
     >
       <MyMarker latitude={location.latitude} longitude={location.longitude} />
-      <UserMarker />
-      <MarkerInfoModal addressName={location.addressName} />
-      <KakaoPolygon />
+      <PostMarkers geoPosts={geoPosts.data} onPostClick={handlePostClick} />
+      <PostsCarousel geoPosts={geoPosts?.data} dong={location.dong} selectedPostIndex={selectedPostIndex} />
+      <KakaoPolygon polygonPaths={polygonPaths} />
       <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
       <ReturnToLocationButton onClick={returnToInitialLocation} />
     </Map>

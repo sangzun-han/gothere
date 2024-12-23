@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { getAdminDistrict } from "@/utils/location/get-admin-district";
 import { useRecoilValue } from "recoil";
 import { locationSelector } from "@/recoil/location/selector";
+import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
 
 export default function DialogKakao({
   visible,
@@ -25,6 +26,8 @@ export default function DialogKakao({
   onSelect: (location: { addressName: string; latitude: number; longitude: number }) => void;
 }) {
   const location = useRecoilValue(locationSelector);
+  const { data: polygonPaths } = usePolygonCoordinates(location.dong);
+
   const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
@@ -66,7 +69,7 @@ export default function DialogKakao({
           }}
         >
           <MyMarker latitude={currentCenter.lat} longitude={currentCenter.lng} />
-          <KakaoPolygon />
+          <KakaoPolygon polygonPaths={polygonPaths} />
           <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
           <ReturnToLocationButton onClick={handleReturnToInitialLocation} position="BOTTOMLEFT" />
           <div className="absolute top-4 right-4 z-50">

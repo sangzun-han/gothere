@@ -7,3 +7,5 @@ export { default as MyMarker } from "./my-marker";
 export { default as UserMarker } from "./user-marker";
 export { default as MarkerInfoModal } from "./marker-info-modal";
 export { default as DialogKakao } from "./dialog-kakao";
+export { default as PostsCarousel } from "./posts-carousel";
+export { default as PostMarkers } from "./post-markers";

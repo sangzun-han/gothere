@@ -6,11 +6,12 @@ import { useAuth } from "@/hooks/auth";
 export default function NoBottomMenuLayout({ children, modal }: { children: React.ReactNode; modal: React.ReactNode }) {
   const { isLoggedIn } = useAuth();
 
+  if (isLoggedIn === undefined) return null;
+
   return (
     <div className="w-full flex flex-col min-h-screen bg-white">
       <NoBottomMenuHeader />
-      {isLoggedIn && children}
-      {!isLoggedIn && modal}
+      {isLoggedIn ? children : modal}
     </div>
   );
 }

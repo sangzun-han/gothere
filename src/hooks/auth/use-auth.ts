@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import browserClient from "@/utils/supabase/client";
 
 export default function useAuth() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | undefined>(undefined);
 
   useEffect(() => {
     const {

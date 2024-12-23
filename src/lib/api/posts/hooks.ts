@@ -1,6 +1,6 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { queryOptions } from "./queries";
-import { GeoPostsResponse, PostListResponse } from "@/types/posts/posts";
+import { GeoPostsResponse, PostDetailResponse, PostListResponse } from "@/types/posts/posts";
 
 export function usePostsBytLocation(location: string) {
   return useSuspenseQuery<GeoPostsResponse>(queryOptions.PostsByLocation(location));
@@ -11,5 +11,5 @@ export function usePostListByLocation(location: string, page: number, limit: num
 }
 
 export function usePostDetailById(id: string) {
-  return useSuspenseQuery(queryOptions.PostDetailById(id));
+  return useSuspenseQuery<PostDetailResponse>(queryOptions.PostDetailById(id));
 }

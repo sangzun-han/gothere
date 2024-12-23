@@ -13,6 +13,21 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
   const supabase = await createClient();
 
   try {
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: "유효하지 않은 인증입니다. 다시 로그인하세요.",
+        },
+        { status: 401 }
+      );
+    }
+
     const { data, error } = await supabase
       .from("posts")
       .select(

@@ -1,5 +1,6 @@
 import { UserProfileResponse } from "@/types/user/user";
 import { getUser } from "./get";
+import { updateUser } from "./update";
 
 const queryKeys = {
   User: () => ["user"] as const,
@@ -14,4 +15,10 @@ const queryOptions = {
   }),
 };
 
-export { queryKeys, queryOptions };
+const mutationOptions = {
+  UpdateUser: () => ({
+    mutationFn: updateUser,
+  }),
+};
+
+export { queryKeys, queryOptions, mutationOptions };

@@ -42,13 +42,13 @@ export default function LocationErrorDrawer({ visible, onClose, selectedAddressN
     <Drawer open={visible} onClose={onClose}>
       <DrawerContent className="flex flex-col">
         <div className="flex-none p-4">
-          <DrawerTitle hidden></DrawerTitle>
-          <DrawerDescription hidden></DrawerDescription>
-          <p className="flex items-center space-x-2">
+          <DrawerTitle className="space-x-2 flex items-center">
             <MapPin className="w-4 h-4 text-text-primary" />
             <span className="text-sm font-medium text-text-primary">{addressName}에서</span>
-          </p>
-          <span className="text-xs font-medium text-text-secondary">{selectedAddressName}</span>
+          </DrawerTitle>
+          <DrawerDescription className="text-xs font-medium text-text-secondary mt-2">
+            {selectedAddressName}
+          </DrawerDescription>
         </div>
 
         <div className="flex-grow relative">

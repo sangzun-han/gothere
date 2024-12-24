@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { KakaoLoginDialog } from "@/components/modal";
 import { useRouter } from "next/navigation";
+import KakaoLoginDialog from "@/components/modal/kakao-login-dialog";
 
 export default function Default() {
   const router = useRouter();

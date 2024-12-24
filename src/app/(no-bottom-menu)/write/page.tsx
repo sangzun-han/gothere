@@ -1,7 +1,6 @@
 "use client";
 
-import { CustomFormField } from "@/components/forms";
-import { FormFieldType } from "@/components/forms/custom-form-field";
+import CustomFormField, { FormFieldType } from "@/components/forms/custom-form-field";
 import { Button } from "@/components/ui/button";
 import { Form } from "@/components/ui/form";
 import { PostFormValidation } from "@/schemas/post-schema";
@@ -13,13 +12,13 @@ import { Input } from "@/components/ui/input";
 import { MapPin } from "lucide-react";
 import { useState } from "react";
 import { ModalType } from "@/types/modals";
-import { LocationErrorDrawer } from "@/components/modal";
 import { useRecoilValue } from "recoil";
 import { extractDong } from "@/utils/location/extract-dong";
 import { locationSelector } from "@/recoil/location/selector";
 import { createPost } from "@/lib/api/posts/create";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import LocationErrorDrawer from "@/components/modal/location-error-drawer";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 

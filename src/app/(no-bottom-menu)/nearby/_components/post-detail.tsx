@@ -1,3 +1,5 @@
+import { MyMarker } from "@/components/kakao";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { usePostDetailById } from "@/lib/api/posts/hooks";
 import { MapPin } from "lucide-react";
 import Image from "next/image";
@@ -25,15 +27,24 @@ export default function PostDetail({ uuid }: { uuid: string }) {
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
       <article className="bg-white">
         <div className="w-full bg-white overflow-hidden">
-          <section className="relative w-full h-64">
-            <Image
-              src={images[0]}
-              alt="Attached letter image"
-              blurDataURL={thumbnail_blur_image}
-              placeholder="blur"
-              className="w-full h-full object-cover"
-              fill
-            />
+          <section className="relative h-64">
+            <Carousel className="">
+              <CarouselContent className=" h-64">
+                {images.map((image, index) => {
+                  return (
+                    <CarouselItem key={index} className="relative w-full h-64">
+                      <Image
+                        src={image}
+                        alt="Attached letter image"
+                        {...(index === 0 ? { blurDataURL: thumbnail_blur_image, placeholder: "blur" } : {})}
+                        className="w-full h-full object-cover"
+                        fill
+                      />
+                    </CarouselItem>
+                  );
+                })}
+              </CarouselContent>
+            </Carousel>
           </section>
 
           <div className="flex flex-1 p-4 space-x-6">
@@ -66,7 +77,7 @@ export default function PostDetail({ uuid }: { uuid: string }) {
               </div>
 
               <div className="relative bg-white rounded-lg shadow-lg p-4 border border-gray-300">
-                <p className="text-sm text-text-primary leading-relaxed whitespace-pre-line">{content}</p>
+                <p className="text-sm text-text-primary leading-relaxed">{content}</p>
               </div>
 
               <section className="space-y-4">
@@ -78,11 +89,9 @@ export default function PostDetail({ uuid }: { uuid: string }) {
                 </div>
 
                 <div className="rounded-lg overflow-hidden border border-gray-200">
-                  <Map
-                    center={{ lat: latitude, lng: longitude }}
-                    style={{ width: "100%", height: "16rem" }}
-                    draggable={false}
-                  />
+                  <Map center={{ lat: latitude, lng: longitude }} style={{ width: "100%", height: "16rem" }}>
+                    <MyMarker latitude={latitude} longitude={longitude} />
+                  </Map>
                 </div>
               </section>
             </section>

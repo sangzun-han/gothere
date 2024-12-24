@@ -15,7 +15,6 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ success: false, data: null, error: "사용자 인증에 실패했습니다." }, { status: 401 });
     }
 
-    // 사용자 정보 가져오기
     const { data, error } = await supabase
       .from("users")
       .select("nickname, profile_url")
@@ -35,6 +34,76 @@ export async function GET(req: NextRequest) {
   } catch (error: any) {
     return NextResponse.json(
       { success: false, data: null, error: error.message || "서버 오류가 발생했습니다." },
+      { status: 500 }
+    );
+  }
+}
+
+export async function PUT(req: NextRequest) {
+  const supabase = await createClient();
+
+  try {
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+
+    if (authError || !user) {
+      return NextResponse.json(
+        { success: false, error: "유효하지 않은 인증입니다. 다시 로그인하세요." },
+        { status: 401 }
+      );
+    }
+
+    const formData = await req.formData();
+    const nickname = formData.get("nickname") as string | null;
+    const profileBlob = formData.get("profileUrl") as Blob | null;
+
+    if (!nickname) {
+      return NextResponse.json({ success: false, error: "닉네임은 필수 항목입니다." }, { status: 400 });
+    }
+
+    let uploadedUrl: string | null = null;
+
+    if (profileBlob) {
+      const fileName = `${user.id}/${Date.now()}.jpg`;
+      const { error: uploadError } = await supabase.storage.from("profile-images").upload(fileName, profileBlob);
+
+      if (uploadError) {
+        throw new Error(`프로필 이미지 업로드 실패: ${uploadError.message}`);
+      }
+
+      const { data: publicData } = supabase.storage.from("profile-images").getPublicUrl(fileName);
+
+      if (!publicData?.publicUrl) {
+        throw new Error(`파일 URL 조회 실패: ${fileName}`);
+      }
+
+      uploadedUrl = publicData.publicUrl;
+    }
+
+    const { error: updateError } = await supabase
+      .from("users")
+      .update({
+        nickname,
+        ...(uploadedUrl && { profile_url: uploadedUrl }),
+      })
+      .eq("id", user.id);
+
+    if (updateError) {
+      throw new Error("프로필 업데이트 중 오류가 발생했습니다.");
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: "프로필이 성공적으로 업데이트되었습니다.",
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : "서버에서 오류가 발생했습니다.",
+      },
       { status: 500 }
     );
   }

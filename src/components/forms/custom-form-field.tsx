@@ -3,7 +3,6 @@ import { Input } from "../ui/input";
 import { FormControl, FormItem, FormLabel, FormMessage } from "../ui/form";
 import FileUploader from "./file-uploader";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
 import { MapPin } from "lucide-react";
 
 export enum FormFieldType {

@@ -19,6 +19,7 @@ import { createPost } from "@/lib/api/posts/create";
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import LocationErrorDrawer from "@/components/modal/location-error-drawer";
+import Spinner from "@/components/spinner/spinner";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
@@ -130,11 +131,7 @@ export default function Page() {
               } text-white border-none`}
               disabled={isLoading}
             >
-              {isLoading ? (
-                <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full border-t-transparent" />
-              ) : (
-                "작성하기"
-              )}
+              {isLoading ? <Spinner /> : "작성하기"}
             </Button>
           </footer>
           <LocationErrorDrawer

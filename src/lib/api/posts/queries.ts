@@ -3,7 +3,7 @@ import { getPostDetail, getPostListByLocation, getPostsByLocation } from "./get"
 
 const queryKeys = {
   PostsByLocation: (location: string) => ["posts", location] as const,
-  PostListByLocation: (location: string, page: number, limit: number) => ["postList", location, page, limit] as const,
+  PostListByLocation: (location: string) => ["postList", location] as const,
   PostDetailById: (id: string) => ["postDetail", id] as const,
 };
 
@@ -15,9 +15,16 @@ const queryOptions = {
     cacheTime: 5 * 60 * 1000,
   }),
 
-  PostListByLocation: (location: string, page: number, limit: number) => ({
-    queryKey: queryKeys.PostListByLocation(location, page, limit),
-    queryFn: (): Promise<PostListResponse> => getPostListByLocation(location, page, limit),
+  PostListByLocation: (location: string, limit: number = 30) => ({
+    queryKey: queryKeys.PostListByLocation(location),
+    queryFn: ({ pageParam = 1 }) => getPostListByLocation(location, pageParam, limit),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: PostListResponse, allPages: PostListResponse[]) => {
+      if (lastPage.data.length < limit) {
+        return undefined;
+      }
+      return allPages.length + 1;
+    },
     staleTime: 5 * 60 * 1000,
     cacheTime: 5 * 60 * 1000,
   }),

@@ -9,6 +9,7 @@ import { Camera } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { ProfileFormValues, profileSchema } from "@/schemas/profile-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import Spinner from "../spinner/spinner";
 
 interface EditProfileDialogProps {
   isOpen: boolean;
@@ -86,11 +87,7 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? (
-                <div className="spinner-border animate-spin inline-block w-4 h-4 border-2 rounded-full border-t-transparent" />
-              ) : (
-                "저장"
-              )}
+              {isSubmitting ? <Spinner /> : "저장"}
             </Button>
           </div>
         </form>

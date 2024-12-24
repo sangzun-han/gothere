@@ -25,7 +25,6 @@ export default function PostItem({ post }: PostItemProps) {
     created_at,
     users: { nickname },
   } = post;
-
   return (
     <div className="mb-4">
       <Link href={`/nearby/${id}`}>

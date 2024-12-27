@@ -20,6 +20,8 @@ import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import LocationErrorDrawer from "@/components/modal/location-error-drawer";
 import Spinner from "@/components/spinner/spinner";
+import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
+import { LocationSelect } from "@/types/\blocation/location";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
@@ -36,17 +38,26 @@ export default function Page() {
       location: "",
       latitude: 0,
       longitude: 0,
+      city: "",
+      district: "",
+      dong: "",
+      polygonPaths: [],
     },
   });
 
   const location = useRecoilValue(locationSelector);
   const [currentModal, setCurrentModal] = useState<ModalType>(ModalType.KAKAOMAP);
   const [isLoading, setIsLoading] = useState(false);
+  const { data: polygonPaths } = usePolygonCoordinates(location.dong);
 
-  const handleLocationSelect = (location: { addressName: string; latitude: number; longitude: number }) => {
+  const handleLocationSelect = (location: LocationSelect) => {
     form.setValue("location", location.addressName);
+    form.setValue("city", location.si);
+    form.setValue("district", location.gu);
+    form.setValue("dong", location.dong);
     form.setValue("latitude", location.latitude);
     form.setValue("longitude", location.longitude);
+    form.setValue("polygonPaths", polygonPaths);
     setCurrentModal(ModalType.NONE);
   };
 
@@ -57,6 +68,16 @@ export default function Page() {
       const selectedDong = extractDong(values.location);
       if (currentDong !== selectedDong) {
         setCurrentModal(ModalType.CONFIRMATION);
+        return;
+      }
+
+      if (!values.polygonPaths || values.polygonPaths.length === 0) {
+        toast({
+          title: "작성 실패",
+          description: "위치 데이터를 확인할 수 없습니다.",
+          variant: "destructive",
+          duration: 1000,
+        });
         return;
       }
 

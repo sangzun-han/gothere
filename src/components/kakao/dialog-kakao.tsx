@@ -15,6 +15,7 @@ import { getAdminDistrict } from "@/utils/location/get-admin-district";
 import { useRecoilValue } from "recoil";
 import { locationSelector } from "@/recoil/location/selector";
 import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
+import { LocationSelect } from "@/types/\blocation/location";
 
 export default function DialogKakao({
   visible,
@@ -23,7 +24,7 @@ export default function DialogKakao({
 }: {
   visible: boolean;
   onClose: () => void;
-  onSelect: (location: { addressName: string; latitude: number; longitude: number }) => void;
+  onSelect: (location: LocationSelect) => void;
 }) {
   const location = useRecoilValue(locationSelector);
   const { data: polygonPaths } = usePolygonCoordinates(location.dong);
@@ -39,6 +40,7 @@ export default function DialogKakao({
   const handleCenterChange = async (lat: number, lng: number) => {
     const adminDistrict = await getAdminDistrict(lat, lng);
     setAddressName(adminDistrict.addressName);
+    return adminDistrict;
   };
 
   const handleReturnToInitialLocation = () => {
@@ -92,13 +94,17 @@ export default function DialogKakao({
             </div>
             <Button
               className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm"
-              onClick={() =>
+              onClick={async () => {
+                const adminDistrict = await handleCenterChange(currentCenter.lat, currentCenter.lng);
                 onSelect({
-                  addressName,
+                  addressName: adminDistrict.addressName,
                   latitude: currentCenter.lat,
                   longitude: currentCenter.lng,
-                })
-              }
+                  si: adminDistrict.si,
+                  gu: adminDistrict.gu,
+                  dong: adminDistrict.dong,
+                });
+              }}
             >
               이 위치로 하기
             </Button>

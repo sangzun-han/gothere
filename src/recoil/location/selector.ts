@@ -11,10 +11,10 @@ export const locationSelector = selector({
       return {
         latitude: 37.579293849225756,
         longitude: 126.97798076343491,
-        si: "서울특별시",
+        si: "서울",
         gu: "종로구",
         dong: "세종로",
-        addressName: "서울특별시 종로구 세종로 1-1",
+        addressName: "서울특별시 종로구 세종로 1",
       };
     }
   },

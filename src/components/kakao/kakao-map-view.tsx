@@ -19,6 +19,7 @@ import { useState } from "react";
 
 export default function KakaoMapView() {
   const location = useRecoilValue(locationSelector);
+  const { si, gu, dong } = location;
   const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
@@ -36,8 +37,8 @@ export default function KakaoMapView() {
     updateCenter({ lat: center.getLat(), lng: center.getLng() });
   };
 
-  const { data: geoPosts } = usePostsBytLocation(location.dong);
-  const { data: polygonPaths } = usePolygonCoordinates(location.dong);
+  const { data: geoPosts } = usePostsBytLocation(si, gu, dong);
+  const { data: polygonPaths } = usePolygonCoordinates(dong);
 
   return (
     <Map

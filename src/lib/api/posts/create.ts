@@ -1,4 +1,5 @@
 import { PostFormValues } from "@/schemas/post-schema";
+import { Coordinate } from "@/types/coordinate/coordinate";
 
 interface ApiResponse {
   success: boolean;
@@ -12,12 +13,17 @@ export async function createPost(values: PostFormValues) {
   formData.append("title", values.title);
   formData.append("content", values.content);
   formData.append("location", values.location);
+  formData.append("city", values.city);
+  formData.append("district", values.district);
+  formData.append("dong", values.dong);
   formData.append("latitude", values.latitude.toString());
   formData.append("longitude", values.longitude.toString());
 
   values.images.forEach((image, index) => {
     formData.append(`images`, image as File);
   });
+
+  formData.append("polygonPaths", JSON.stringify(values.polygonPaths));
 
   try {
     const response = await fetch("/api/posts", {

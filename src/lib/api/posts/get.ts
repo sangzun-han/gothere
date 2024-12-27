@@ -3,11 +3,12 @@ import { GeoPostsResponse, PostListResponse } from "@/types/posts/posts";
 /**
  * 특정 위치의 게시글 데이터를 가져옵니다.
  *
- * @param location - 검색할 '동' 이름
- * @returns Promise<PostsResponse>
+ * @param location - 검색할 '시,군,동' 이름
+ * @returns Promise<GeoPostsResponse>
  */
-export async function getPostsByLocation(location: string): Promise<GeoPostsResponse> {
-  const response = await fetch(`/api/posts/location/${location}`);
+export async function getPostsByLocation(si: string, gu: string, dong: string): Promise<GeoPostsResponse> {
+  const queryParams = new URLSearchParams({ si, gu, dong }).toString();
+  const response = await fetch(`/api/posts/location?${queryParams}`);
   if (!response.ok) throw new Error("게시글 조회 중 오류가 발생했습니다.");
 
   return response.json();

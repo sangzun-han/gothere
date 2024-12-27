@@ -2,15 +2,15 @@ import { GeoPostsResponse, PostDetailResponse, PostListResponse } from "@/types/
 import { getPostDetail, getPostListByLocation, getPostsByLocation } from "./get";
 
 const queryKeys = {
-  PostsByLocation: (location: string) => ["posts", location] as const,
+  PostsByLocation: (si: string, gu: string, dong: string) => ["posts", si, gu, dong] as const,
   PostListByLocation: (location: string) => ["postList", location] as const,
   PostDetailById: (id: string) => ["postDetail", id] as const,
 };
 
 const queryOptions = {
-  PostsByLocation: (location: string) => ({
-    queryKey: queryKeys.PostsByLocation(location),
-    queryFn: (): Promise<GeoPostsResponse> => getPostsByLocation(location),
+  PostsByLocation: (si: string, gu: string, dong: string) => ({
+    queryKey: queryKeys.PostsByLocation(si, gu, dong),
+    queryFn: (): Promise<GeoPostsResponse> => getPostsByLocation(si, gu, dong),
     staleTime: 5 * 60 * 1000,
     cacheTime: 5 * 60 * 1000,
   }),

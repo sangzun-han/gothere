@@ -8,8 +8,8 @@ import PostItem from "./post-item";
 import Spinner from "@/components/spinner/spinner";
 import useScrollRestoration from "@/hooks/ui/use-scroll-restoration";
 
-export default function PostList({ dong }: { dong: string }) {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePostListByLocation(dong, 30);
+export default function PostList({ si, gu, dong }: { si: string; gu: string; dong: string }) {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePostListByLocation(si, gu, dong, 30);
   const posts = useMemo(() => data?.pages.flatMap((posts) => posts), [data]);
 
   const observerRef = useIntersectionObserver({

@@ -10,7 +10,7 @@ import NearbyFallback from "@/components/fallback/nearby-fallback";
 
 export default function Page() {
   const location = useRecoilValue(locationSelector);
-
+  const { si, gu, dong } = location;
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
       <article className="bg-white p-4 min-h-screen">
@@ -23,7 +23,7 @@ export default function Page() {
           {({ reset }) => (
             <ApiErrorBoundary onReset={reset}>
               <Suspense fallback={<NearbyFallback />}>
-                <PostList dong={location.dong} />
+                <PostList si={si} gu={gu} dong={dong} />
               </Suspense>
             </ApiErrorBoundary>
           )}

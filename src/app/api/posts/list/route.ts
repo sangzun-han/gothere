@@ -5,15 +5,14 @@ import { format } from "date-fns";
 
 export async function GET(req: Request) {
   const { searchParams } = new URL(req.url);
-  const location = searchParams.get("location") || "";
+  const si = searchParams.get("si") || "";
+  const gu = searchParams.get("gu") || "";
+  const dong = searchParams.get("dong") || "";
   const page = parseInt(searchParams.get("page") || "1", 10);
   const limit = parseInt(searchParams.get("limit") || "30", 10);
 
-  if (!location) {
-    return NextResponse.json<PostListResponse>(
-      { success: false, data: [], error: "Location parameter is required" },
-      { status: 400 }
-    );
+  if (!si || !gu || !dong) {
+    return NextResponse.json({ success: false, data: [], error: "시/군/동 정보가 필요합니다." }, { status: 400 });
   }
 
   const supabase = await createClient();
@@ -22,7 +21,9 @@ export async function GET(req: Request) {
     const { data, error } = await supabase
       .from("posts")
       .select(`id,title,content,location,thumbnail:images->>0,thumbnail_blur_image, created_at, users (nickname)`)
-      .like("location", `%${location}%`)
+      .eq("city", si)
+      .eq("district", gu)
+      .eq("dong", dong)
       .order("created_at", { ascending: false })
       .range((page - 1) * limit, page * limit - 1)
       .returns<Post[]>();

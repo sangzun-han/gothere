@@ -17,25 +17,25 @@ export async function getPostsByLocation(si: string, gu: string, dong: string): 
 /**
  * 특정 위치의 게시글 데이터를 가져옵니다.
  *
- * @param location - 검색할 '동' 이름
+ * @param si - 검색할 '시/도' 이름
+ * @param gu - 검색할 '구/군' 이름
+ * @param dong - 검색할 '동' 이름
  * @param page - 현재 페이지 (기본값: 1)
  * @param limit - 페이지당 데이터 수 (기본값: 30)
  * @returns Promise<PostListResponse>
  */
 export async function getPostListByLocation(
-  location: string,
+  si: string,
+  gu: string,
+  dong: string,
   page: number = 1,
   limit: number = 30
 ): Promise<PostListResponse> {
-  if (!location) {
+  if (!si || !gu || !dong) {
     throw new Error("Location parameter is required");
   }
 
-  const queryParams = new URLSearchParams({
-    location,
-    page: page.toString(),
-    limit: limit.toString(),
-  });
+  const queryParams = new URLSearchParams({ si, gu, dong, page: page.toString(), limit: limit.toString() });
 
   const response = await fetch(`/api/posts/list?${queryParams.toString()}`);
   if (!response.ok) {

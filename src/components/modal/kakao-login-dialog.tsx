@@ -57,7 +57,7 @@ function LoginContent({ onClose }: { onClose: () => void }) {
     await browserClient.auth.signInWithOAuth({
       provider: "kakao",
       options: {
-        redirectTo: `http://localhost:3000/auth/callback`,
+        redirectTo: `${process.env.NEXT_PUBLIC_BASE_URL}/auth/callback`,
       },
     });
   };

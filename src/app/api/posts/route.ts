@@ -28,6 +28,7 @@ async function uploadImages(files: File[], userId: string): Promise<string[]> {
         const { error } = await supabase.storage.from("post-images").upload(fileName, file);
 
         if (error) {
+          console.log("errro", error);
           throw new Error(`이미지 업로드 실패: ${error.message}`);
         }
 
@@ -43,6 +44,7 @@ async function uploadImages(files: File[], userId: string): Promise<string[]> {
 
     return uploadedUrls;
   } catch (error) {
+    console.log(error);
     throw new Error(error instanceof Error ? error.message : "이미지 업로드 중 오류가 발생했습니다.");
   }
 }

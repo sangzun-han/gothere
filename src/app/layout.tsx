@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: "gothere",
     images: [
       {
-        url: "/gothere-og-image.png",
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/gothere-og-image.png`,
         width: 1200,
         height: 630,
         alt: "gothere : 당신의 흔적이 머무는 곳",

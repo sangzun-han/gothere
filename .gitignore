@@ -16,10 +16,8 @@
 # production
 /build
 
-/public/dong.json
 /public/test
 /src/app/api/bulk
-/src/app/sample/
 
 # misc
 .DS_Store

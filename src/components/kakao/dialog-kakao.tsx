@@ -74,7 +74,7 @@ export default function DialogKakao({
           <KakaoPolygon polygonPaths={polygonPaths} />
           <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
           <ReturnToLocationButton onClick={handleReturnToInitialLocation} position="BOTTOMLEFT" />
-          <div className="absolute top-4 right-4 z-50">
+          <div className="fixed top-4 right-4 z-50">
             <Button
               onClick={onClose}
               className="p-2 bg-white rounded-full shadow-md text-lg font-bold hover:bg-secondary-dark"
@@ -84,7 +84,7 @@ export default function DialogKakao({
               <X className="w-4 h-4 text-text-primary" />
             </Button>
           </div>
-          <div className="absolute left-1/2 transform -translate-x-1/2 bottom-8 bg-white shadow-lg rounded-lg p-4 w-11/12 z-[999]">
+          <div className="fixed left-1/2 transform -translate-x-1/2 bottom-6 w-11/12 z-[99] bg-white shadow-lg rounded-lg p-4">
             <h2 className="text-lg font-bold text-text-primary">장소는 여기!</h2>
 
             <div className="flex items-center text-xs text-gray-500 mb-2">

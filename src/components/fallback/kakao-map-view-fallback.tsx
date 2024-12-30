@@ -1,5 +1,5 @@
 import { Map } from "react-kakao-maps-sdk";
-import { MapZoomControl, MyMarker, ReturnToLocationButton } from "../kakao";
+import { MyMarker, ReturnToLocationButton } from "../kakao";
 import BottomNavigation from "../navigation/bottom-navigation";
 
 export default function KakaoMapViewFallback() {
@@ -21,7 +21,6 @@ export default function KakaoMapViewFallback() {
         <div className="bg-gray-200 h-10 w-full rounded" />
       </div>
       <MyMarker latitude={fallbackCenter.lat} longitude={fallbackCenter.lng} />
-      <MapZoomControl onZoomIn={() => {}} onZoomOut={() => {}} />
       <ReturnToLocationButton onClick={() => {}} />
       <BottomNavigation />
     </Map>

@@ -156,9 +156,10 @@ export default function Page() {
           <footer className="fixed bottom-0 w-full bg-white border-t border-gray-300 px-4 py-3">
             <Button
               type="submit"
-              className={`w-full ${
-                isLoading ? "bg-brand-primary/70 cursor-not-allowed" : "bg-brand-primary hover:bg-brand-hover"
-              } text-white border-none`}
+              className={`w-full bg-brand-primary text-white border-none 
+                disabled:bg-brand-primary/70 
+                disabled:cursor-not-allowed 
+                hover:bg-brand-hover`}
               disabled={isLoading}
             >
               {isLoading ? <Spinner /> : "작성하기"}

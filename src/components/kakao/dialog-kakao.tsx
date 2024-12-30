@@ -1,11 +1,9 @@
 "use client";
 
-import { useMapZoom } from "@/hooks/kakao";
 import { useMapCenter } from "@/hooks/location";
 import { Map } from "react-kakao-maps-sdk";
 import MyMarker from "./my-marker";
 import KakaoPolygon from "./kakao-polygon";
-import MapZoomControl from "./map-zoom-control";
 import ReturnToLocationButton from "./return-to-location-button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "../ui/dialog";
 import { Button } from "../ui/button";
@@ -29,7 +27,6 @@ export default function DialogKakao({
   const location = useRecoilValue(locationSelector);
   const { data: polygonPaths } = usePolygonCoordinates(location.dong);
 
-  const { zoomLevel, adjustZoom } = useMapZoom();
   const { currentCenter, updateCenter, returnToInitialLocation } = useMapCenter({
     lat: location.latitude,
     lng: location.longitude,
@@ -59,8 +56,9 @@ export default function DialogKakao({
         <DialogDescription hidden>위치를 선택하고 닫기 버튼을 눌러주세요.</DialogDescription>
         <Map
           center={currentCenter}
+          isPanto={true}
           style={{ width: "100%", height: "100%" }}
-          level={zoomLevel}
+          level={5}
           onCenterChanged={(map) => {
             const center = map.getCenter();
             const newLat = center.getLat();
@@ -72,7 +70,6 @@ export default function DialogKakao({
         >
           <MyMarker latitude={currentCenter.lat} longitude={currentCenter.lng} />
           <KakaoPolygon polygonPaths={polygonPaths} />
-          <MapZoomControl onZoomIn={() => adjustZoom(-1)} onZoomOut={() => adjustZoom(1)} />
           <ReturnToLocationButton onClick={handleReturnToInitialLocation} position="BOTTOMLEFT" />
           <div className="fixed top-4 right-4 z-50">
             <Button

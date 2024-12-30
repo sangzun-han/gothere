@@ -81,9 +81,10 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
               취소
             </Button>
             <Button
-              className={`w-24 ${
-                isSubmitting ? "bg-brand-primary/70 cursor-not-allowed" : "bg-brand-primary hover:bg-brand-hover"
-              } text-white flex justify-center items-center`}
+              className={`w-full bg-brand-primary text-white border-none 
+                disabled:bg-brand-primary/70 
+                disabled:cursor-not-allowed 
+                hover:bg-brand-hover`}
               type="submit"
               disabled={isSubmitting}
             >

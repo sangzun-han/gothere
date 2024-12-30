@@ -11,42 +11,6 @@ interface ApiResponse {
   error?: string;
 }
 
-/**
- * Supabase Storage에 여러 이미지를 업로드하고 URL 배열 반환
- * @param files 업로드할 파일 배열
- * @param userId 현재 유저 ID
- * @returns 업로드된 이미지 URL 배열
- */
-
-async function uploadImages(files: File[], userId: string): Promise<string[]> {
-  const supabase = await createClient();
-
-  try {
-    const uploadedUrls = await Promise.all(
-      files.map(async (file) => {
-        const fileName = `${userId}/${Date.now()}-${file.name}`;
-        const { error } = await supabase.storage.from("post-images").upload(fileName, file);
-
-        if (error) {
-          throw new Error(`이미지 업로드 실패: ${error.message}`);
-        }
-
-        const { data: publicData } = supabase.storage.from("post-images").getPublicUrl(fileName);
-
-        if (!publicData) {
-          throw new Error(`파일 URL 조회 실패: ${fileName}`);
-        }
-
-        return publicData.publicUrl;
-      })
-    );
-
-    return uploadedUrls;
-  } catch (error) {
-    throw new Error(error instanceof Error ? error.message : "이미지 업로드 중 오류가 발생했습니다.");
-  }
-}
-
 export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>> {
   try {
     const supabase = await createClient();
@@ -77,7 +41,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
       dong: formData.get("dong") as string,
       latitude: parseFloat(formData.get("latitude") as string),
       longitude: parseFloat(formData.get("longitude") as string),
-      images: formData.getAll("images") as File[],
+      images: JSON.parse(formData.get("images") as string) as string[],
       polygonPaths: JSON.parse(formData.get("polygonPaths") as string),
     };
 
@@ -94,13 +58,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
       );
     }
 
-    const imageUrls = await uploadImages(postData.images, user.id);
-
-    let blurImage: string | undefined = undefined;
-    if (imageUrls.length > 0) {
-      const firstImg = imageUrls[0];
-      blurImage = await getBlurImg(firstImg);
-    }
+    const thumbnail_blur_image = await getBlurImg(validatedData.images[0]);
 
     const { error: saveError } = await supabase.from("posts").insert({
       user_id: user.id,
@@ -112,8 +70,8 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
       dong: validatedData.dong,
       latitude: validatedData.latitude,
       longitude: validatedData.longitude,
-      images: imageUrls,
-      thumbnail_blur_image: blurImage,
+      images: validatedData.images,
+      thumbnail_blur_image: thumbnail_blur_image,
     });
 
     if (saveError) {

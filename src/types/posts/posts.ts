@@ -1,3 +1,5 @@
+import { Coordinate } from "../coordinate/coordinate";
+
 export interface GeoPost {
   id: string;
   title: string;
@@ -52,4 +54,17 @@ export interface PostDetailResponse {
   success: boolean;
   data: PostDetail | null;
   error?: string;
+}
+
+export interface PostRequestPayload {
+  title: string;
+  content: string;
+  location: string;
+  city: string;
+  district: string;
+  dong: string;
+  latitude: number;
+  longitude: number;
+  images: string[];
+  polygonPaths: Coordinate[][] | Coordinate[];
 }

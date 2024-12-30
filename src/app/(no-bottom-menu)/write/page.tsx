@@ -21,7 +21,8 @@ import { useToast } from "@/hooks/use-toast";
 import LocationErrorDrawer from "@/components/modal/location-error-drawer";
 import Spinner from "@/components/spinner/spinner";
 import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
-import { LocationSelect } from "@/types/\blocation/location";
+import { LocationSelect } from "@/types/location/location";
+import { uploadImages } from "@/utils/image/upload-supabase-image";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
@@ -81,7 +82,15 @@ export default function Page() {
         return;
       }
 
-      await createPost(values);
+      const imageUrls = await uploadImages(values.images);
+
+      const postData = {
+        ...values,
+        images: imageUrls,
+      };
+
+      await createPost(postData);
+
       toast({
         title: "작성 완료",
         description: "성공적으로 작성되었습니다.",

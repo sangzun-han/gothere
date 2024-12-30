@@ -43,6 +43,7 @@ export default function KakaoMapView() {
   return (
     <Map
       center={currentCenter}
+      isPanto={true}
       style={{ width: "100%", height: "100vh" }}
       level={zoomLevel}
       onCenterChanged={handleCenterChanged}

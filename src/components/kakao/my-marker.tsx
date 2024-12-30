@@ -14,7 +14,7 @@ export default function MyMarker({ latitude, longitude, role = "ME" }: MyMarkerP
   return (
     <CustomOverlayMap position={{ lat: latitude, lng: longitude }}>
       <div className="relative flex items-center justify-center">
-        <div className={`absolute w-16 h-16 ${bgClass} rounded-full`}></div>
+        <div className={`absolute w-12 h-12 ${bgClass} rounded-full`}></div>
         <div className="relative w-6 h-6" style={{ color: iconColor }}>
           <MapPin size={24} fill={iconColor} stroke="none" />
         </div>

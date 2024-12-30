@@ -59,6 +59,7 @@ export default function DialogKakao({
         <DialogDescription hidden>위치를 선택하고 닫기 버튼을 눌러주세요.</DialogDescription>
         <Map
           center={currentCenter}
+          isPanto={true}
           style={{ width: "100%", height: "100%" }}
           level={zoomLevel}
           onCenterChanged={(map) => {

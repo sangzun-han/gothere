@@ -10,9 +10,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        spacing: {
-          "safe-bottom": "calc(env(safe-area-inset-bottom) + 0px)",
-        },
         brand: {
           primary: "#5952ff",
           hover: "#4a42e6",

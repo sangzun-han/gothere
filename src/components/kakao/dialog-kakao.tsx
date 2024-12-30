@@ -54,7 +54,7 @@ export default function DialogKakao({
 
   return (
     <Dialog open={visible}>
-      <DialogContent className="w-screen h-screen p-0">
+      <DialogContent className="w-full h-full p-0">
         <DialogTitle hidden>카카오 지도</DialogTitle>
         <DialogDescription hidden>위치를 선택하고 닫기 버튼을 눌러주세요.</DialogDescription>
         <Map
@@ -84,7 +84,7 @@ export default function DialogKakao({
               <X className="w-4 h-4 text-text-primary" />
             </Button>
           </div>
-          <div className="fixed left-1/2 transform -translate-x-1/2 bottom-6 w-11/12 z-[99] bg-white shadow-lg rounded-lg p-4">
+          <div className="fixed left-1/2 transform -translate-x-1/2 bottom-5 w-11/12 z-[99] bg-white shadow-lg rounded-lg p-4">
             <h2 className="text-lg font-bold text-text-primary">장소는 여기!</h2>
 
             <div className="flex items-center text-xs text-gray-500 mb-2">

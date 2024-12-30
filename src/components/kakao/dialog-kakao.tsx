@@ -15,7 +15,7 @@ import { getAdminDistrict } from "@/utils/location/get-admin-district";
 import { useRecoilValue } from "recoil";
 import { locationSelector } from "@/recoil/location/selector";
 import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
-import { LocationSelect } from "@/types/\blocation/location";
+import { LocationSelect } from "@/types/location/location";
 
 export default function DialogKakao({
   visible,

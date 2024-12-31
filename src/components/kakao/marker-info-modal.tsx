@@ -1,7 +1,6 @@
 import React from "react";
 import Image from "next/image";
 import { GeoPost } from "@/types/posts/posts";
-import { Button } from "../ui/button";
 import { useRouter } from "next/navigation";
 
 interface MarkerInfoModalProps {
@@ -9,10 +8,10 @@ interface MarkerInfoModalProps {
 }
 
 export default function MarkerInfoModal({ post }: MarkerInfoModalProps) {
-    const router = useRouter();
+  const router = useRouter();
 
   return (
-    <div className="bg-white p-4 rounded-sm">
+    <div className="bg-text-primary/80 p-4 rounded-sm cursor-pointer" onClick={() => router.push(`/nearby/${post.id}`)}>
       <div className="flex items-center mb-4 min-w-0">
         <div className="w-14 h-14 rounded-full overflow-hidden mr-4">
           <Image
@@ -26,16 +25,13 @@ export default function MarkerInfoModal({ post }: MarkerInfoModalProps) {
           />
         </div>
 
-        <div className="flex-1 min-w-0">
+        <div className="flex-1 min-w-0 text-white">
           <h2 className="text-lg font-bold truncate">{post.title}</h2>
-          <p className="text-sm text-gray-500 truncate">{post.content}</p>
+          <p className="text-sm  truncate">{post.content}</p>
         </div>
       </div>
 
-      <div className="text-sm text-gray-500 mb-4">{post.location}</div>
-      <Button className="bg-brand-primary hover:bg-brand-hover text-white w-full py-2 rounded-lg text-sm font-semibold" onClick={() => router.push(`/nearby/${post.id}`)} type="button">
-        자세히보기
-      </Button>
+      <div className="text-sm text-white">{post.location}</div>
     </div>
   );
 }

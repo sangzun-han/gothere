@@ -1,5 +1,6 @@
 import { GeoPostsResponse, PostDetailResponse, PostListResponse } from "@/types/posts/posts";
 import { getPostDetail, getPostListByLocation, getPostsByLocation } from "./get";
+import { updateLike } from "./update";
 
 const queryKeys = {
   PostsByLocation: (si: string, gu: string, dong: string) => ["posts", si, gu, dong] as const,
@@ -37,4 +38,21 @@ const queryOptions = {
   }),
 };
 
-export { queryKeys, queryOptions };
+const mutationKeys = {
+  UpdateLike: (postId: string) => ["updateLike", postId] as const,
+};
+
+const mutationOptions = {
+  UpdateLike: (postId: string) => ({
+    mutationKey: mutationKeys.UpdateLike(postId),
+    mutationFn: (): Promise<{ isLiked: boolean }> => updateLike(postId),
+    onSuccess: (data: { isLiked: boolean }) => {
+      console.log("좋아요 상태 변경 성공:", data);
+    },
+    onError: (error: unknown) => {
+      console.error("좋아요 상태 변경 중 오류:", error);
+    },
+  }),
+};
+
+export { queryKeys, queryOptions, mutationKeys, mutationOptions };

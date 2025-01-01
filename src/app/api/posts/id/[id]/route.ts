@@ -1,4 +1,4 @@
-import { PostDetail, PostDetailResponse } from "@/types/posts/posts";
+import { PostDetail, PostDetailResponse, SupabasePostDetail } from "@/types/posts/posts";
 import { createClient } from "@/utils/supabase/server";
 import { format } from "date-fns";
 import { NextRequest, NextResponse } from "next/server";
@@ -31,10 +31,14 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
     const { data, error } = await supabase
       .from("posts")
       .select(
-        `id,title,content,location, images, thumbnail_blur_image, created_at, latitude, longitude, users (nickname, profile_url)`
+        `id,title,content,location, images, thumbnail_blur_image, created_at, latitude, longitude,
+        users (nickname, profile_url),
+        favorites (user_id)
+        `
       )
       .eq("id", id)
-      .maybeSingle<PostDetail>();
+      .eq("favorites.user_id", user.id)
+      .maybeSingle<SupabasePostDetail>();
 
     if (error) {
       if (error.code === "22P02") {
@@ -50,6 +54,8 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
       );
     }
 
+    const isLiked = !!data.favorites?.length;
+
     const post: PostDetail = {
       title: data.title,
       content: data.content,
@@ -63,6 +69,7 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
         nickname: data.users.nickname,
         profile_url: data.users.profile_url || null,
       },
+      isLiked,
     };
 
     return NextResponse.json({ success: true, data: post }, { status: 200 });

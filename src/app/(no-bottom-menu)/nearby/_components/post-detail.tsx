@@ -1,7 +1,7 @@
 import { MyMarker } from "@/components/kakao";
 import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { usePostDetailById } from "@/lib/api/posts/hooks";
+import { usePostDetailById, useUpdateLike } from "@/lib/api/posts/hooks";
 import { Heart, MapPin } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -10,7 +10,6 @@ import { Map } from "react-kakao-maps-sdk";
 
 export default function PostDetail({ uuid }: { uuid: string }) {
   const { data } = usePostDetailById(uuid);
-  const [isFavorited, setIsFavorited] = useState(false);
 
   if (!data || !data.data) return notFound();
 
@@ -23,12 +22,11 @@ export default function PostDetail({ uuid }: { uuid: string }) {
     title,
     latitude,
     longitude,
+    isLiked,
     users: { nickname, profile_url },
   } = data.data;
 
-  const handleFavoriteClick = () => {
-    setIsFavorited((prev) => !prev);
-  };
+  const updateLikeMutation = useUpdateLike(uuid);
 
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
@@ -84,13 +82,13 @@ export default function PostDetail({ uuid }: { uuid: string }) {
                   </div>
                 </div>
                 <Button
-                  onClick={handleFavoriteClick}
                   className="p-2 rounded-full border bg-white"
                   size="icon"
                   variant="ghost"
+                  onClick={() => updateLikeMutation.mutate()}
                 >
                   <Heart
-                    className={`w-5 h-5 ${isFavorited ? "text-red-500 fill-red-500" : "text-text-primary fill-none"}`}
+                    className={`w-5 h-5 ${isLiked ? "text-red-500 fill-red-500" : "text-text-primary fill-none"}`}
                   />
                 </Button>
               </div>

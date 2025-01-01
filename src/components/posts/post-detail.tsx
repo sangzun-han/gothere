@@ -5,11 +5,11 @@ import { usePostDetailById, useUpdateLike } from "@/lib/api/posts/hooks";
 import { Heart, MapPin } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 
 export default function PostDetail({ uuid }: { uuid: string }) {
   const { data } = usePostDetailById(uuid);
+  const updateLikeMutation = useUpdateLike(uuid);
 
   if (!data || !data.data) return notFound();
 
@@ -25,8 +25,6 @@ export default function PostDetail({ uuid }: { uuid: string }) {
     isLiked,
     users: { nickname, profile_url },
   } = data.data;
-
-  const updateLikeMutation = useUpdateLike(uuid);
 
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">

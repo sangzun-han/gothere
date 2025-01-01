@@ -27,7 +27,7 @@ export default function PostItem({ post }: PostItemProps) {
   } = post;
   return (
     <div className="mb-4">
-      <Link href={`/nearby/${id}`}>
+      <Link href={`/posts/${id}`}>
         <article className="relative bg-white rounded-lg shadow-lg p-6 border border-gray-300 transform transition hover:rotate-1 hover:scale-[1.02] cursor-pointer">
           <figure className="absolute top-4 right-4 w-16 h-16 rounded-lg border-2 border-gray-400 p-1 bg-white shadow-md rotate-6">
             <Image

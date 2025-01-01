@@ -11,7 +11,7 @@ export default function MarkerInfoModal({ post }: MarkerInfoModalProps) {
   const router = useRouter();
 
   return (
-    <div className="bg-text-primary/80 p-4 rounded-sm cursor-pointer" onClick={() => router.push(`/nearby/${post.id}`)}>
+    <div className="bg-text-primary/80 p-4 rounded-sm cursor-pointer" onClick={() => router.push(`/posts/${post.id}`)}>
       <div className="flex items-center mb-4 min-w-0">
         <div className="w-14 h-14 rounded-full overflow-hidden mr-4">
           <Image

@@ -6,7 +6,7 @@ import { Suspense } from "react";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
 import { ApiErrorBoundary } from "@/components/error/api-error-boundary";
 import PostList from "./_components/post-list";
-import NearbyFallback from "@/components/fallback/nearby-fallback";
+import PostsFallback from "@/components/fallback/nearby-fallback";
 
 export default function Page() {
   const location = useRecoilValue(locationSelector);
@@ -22,7 +22,7 @@ export default function Page() {
         <QueryErrorResetBoundary>
           {({ reset }) => (
             <ApiErrorBoundary onReset={reset}>
-              <Suspense fallback={<NearbyFallback />}>
+              <Suspense fallback={<PostsFallback />}>
                 <PostList si={si} gu={gu} dong={dong} />
               </Suspense>
             </ApiErrorBoundary>

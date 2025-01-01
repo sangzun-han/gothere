@@ -13,7 +13,7 @@ interface ScrollRestorationOptions {
    * @example "post-list-previous-path" */
   previousPathKey: string;
   /** 스크롤 위치를 복원할 페이지의 경로 패턴
-   * @example "/posts/" or "/nearby/" */
+   * @example "/posts/" */
   pathPattern: string;
 }
 

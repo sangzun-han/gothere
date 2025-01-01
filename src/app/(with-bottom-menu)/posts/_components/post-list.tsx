@@ -21,7 +21,7 @@ export default function PostList({ si, gu, dong }: { si: string; gu: string; don
     isEnabled: Boolean(posts?.length),
     scrollKey: POST_LIST_SCROLL_POSITION_KEY,
     previousPathKey: POST_LIST_PREVIOUS_PATH_KEY,
-    pathPattern: "/nearby/",
+    pathPattern: "/posts/",
   });
 
   return (

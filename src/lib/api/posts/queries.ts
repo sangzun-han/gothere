@@ -46,12 +46,6 @@ const mutationOptions = {
   UpdateLike: (postId: string) => ({
     mutationKey: mutationKeys.UpdateLike(postId),
     mutationFn: (): Promise<{ isLiked: boolean }> => updateLike(postId),
-    onSuccess: (data: { isLiked: boolean }) => {
-      console.log("좋아요 상태 변경 성공:", data);
-    },
-    onError: (error: unknown) => {
-      console.error("좋아요 상태 변경 중 오류:", error);
-    },
   }),
 };
 

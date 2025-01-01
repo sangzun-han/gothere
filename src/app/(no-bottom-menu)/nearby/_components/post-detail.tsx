@@ -34,7 +34,7 @@ export default function PostDetail({ uuid }: { uuid: string }) {
         <div className="w-full bg-white overflow-hidden">
           <section className="relative h-64">
             <Carousel className="">
-              <CarouselContent className=" h-64">
+              <CarouselContent className="h-64">
                 {images.map((image, index) => {
                   return (
                     <CarouselItem key={index} className="relative w-full h-64">

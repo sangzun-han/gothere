@@ -1,13 +1,16 @@
 import { MyMarker } from "@/components/kakao";
+import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { usePostDetailById } from "@/lib/api/posts/hooks";
-import { MapPin } from "lucide-react";
+import { Heart, MapPin } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
+import { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
 
 export default function PostDetail({ uuid }: { uuid: string }) {
   const { data } = usePostDetailById(uuid);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   if (!data || !data.data) return notFound();
 
@@ -22,6 +25,10 @@ export default function PostDetail({ uuid }: { uuid: string }) {
     longitude,
     users: { nickname, profile_url },
   } = data.data;
+
+  const handleFavoriteClick = () => {
+    setIsFavorited((prev) => !prev);
+  };
 
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
@@ -58,22 +65,34 @@ export default function PostDetail({ uuid }: { uuid: string }) {
             </aside>
 
             <section className="w-5/6 space-y-6">
-              <div className="flex items-center space-x-4">
-                <figure className="w-12 h-12 flex-shrink-0 rounded-full border border-gray-300 p-1 bg-white shadow-md overflow-hidden">
-                  <Image
-                    src={profile_url ? profile_url : "https://via.placeholder.com/48"}
-                    alt="User profile"
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover rounded-full overflow-hidden"
-                  />
-                </figure>
-                <div className="py-1">
-                  <h1 className="text-base font-bold font-serif text-text-primary underline decoration-wavy decoration-gray-500">
-                    {title}
-                  </h1>
-                  <p className="text-[11px] text-gray-600">@{nickname}</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <figure className="w-12 h-12 flex-shrink-0 rounded-full border border-gray-300 p-1 bg-white shadow-md overflow-hidden">
+                    <Image
+                      src={profile_url ? profile_url : "https://via.placeholder.com/48"}
+                      alt="User profile"
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover rounded-full overflow-hidden"
+                    />
+                  </figure>
+                  <div className="py-1">
+                    <h1 className="text-base font-bold font-serif text-text-primary underline decoration-wavy decoration-gray-500">
+                      {title}
+                    </h1>
+                    <p className="text-[11px] text-gray-600">@{nickname}</p>
+                  </div>
                 </div>
+                <Button
+                  onClick={handleFavoriteClick}
+                  className="p-2 rounded-full border bg-white"
+                  size="icon"
+                  variant="ghost"
+                >
+                  <Heart
+                    className={`w-5 h-5 ${isFavorited ? "text-red-500 fill-red-500" : "text-text-primary fill-none"}`}
+                  />
+                </Button>
               </div>
 
               <div className="relative bg-white rounded-lg shadow-lg p-4 border border-gray-300">

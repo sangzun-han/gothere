@@ -1,13 +1,15 @@
 import { MyMarker } from "@/components/kakao";
+import { Button } from "@/components/ui/button";
 import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
-import { usePostDetailById } from "@/lib/api/posts/hooks";
-import { MapPin } from "lucide-react";
+import { usePostDetailById, useUpdateLike } from "@/lib/api/posts/hooks";
+import { Heart, MapPin } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Map } from "react-kakao-maps-sdk";
 
 export default function PostDetail({ uuid }: { uuid: string }) {
   const { data } = usePostDetailById(uuid);
+  const updateLikeMutation = useUpdateLike(uuid);
 
   if (!data || !data.data) return notFound();
 
@@ -20,6 +22,7 @@ export default function PostDetail({ uuid }: { uuid: string }) {
     title,
     latitude,
     longitude,
+    isLiked,
     users: { nickname, profile_url },
   } = data.data;
 
@@ -29,7 +32,7 @@ export default function PostDetail({ uuid }: { uuid: string }) {
         <div className="w-full bg-white overflow-hidden">
           <section className="relative h-64">
             <Carousel className="">
-              <CarouselContent className=" h-64">
+              <CarouselContent className="h-64">
                 {images.map((image, index) => {
                   return (
                     <CarouselItem key={index} className="relative w-full h-64">
@@ -58,22 +61,34 @@ export default function PostDetail({ uuid }: { uuid: string }) {
             </aside>
 
             <section className="w-5/6 space-y-6">
-              <div className="flex items-center space-x-4">
-                <figure className="w-12 h-12 flex-shrink-0 rounded-full border border-gray-300 p-1 bg-white shadow-md overflow-hidden">
-                  <Image
-                    src={profile_url ? profile_url : "https://via.placeholder.com/48"}
-                    alt="User profile"
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover rounded-full overflow-hidden"
-                  />
-                </figure>
-                <div className="py-1">
-                  <h1 className="text-base font-bold font-serif text-text-primary underline decoration-wavy decoration-gray-500">
-                    {title}
-                  </h1>
-                  <p className="text-[11px] text-gray-600">@{nickname}</p>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-4">
+                  <figure className="w-12 h-12 flex-shrink-0 rounded-full border border-gray-300 p-1 bg-white shadow-md overflow-hidden">
+                    <Image
+                      src={profile_url ? profile_url : "https://via.placeholder.com/48"}
+                      alt="User profile"
+                      width={48}
+                      height={48}
+                      className="w-full h-full object-cover rounded-full overflow-hidden"
+                    />
+                  </figure>
+                  <div className="py-1">
+                    <h1 className="text-base font-bold font-serif text-text-primary underline decoration-wavy decoration-gray-500">
+                      {title}
+                    </h1>
+                    <p className="text-[11px] text-gray-600">@{nickname}</p>
+                  </div>
                 </div>
+                <Button
+                  className="p-2 rounded-full border bg-white"
+                  size="icon"
+                  variant="ghost"
+                  onClick={() => updateLikeMutation.mutate()}
+                >
+                  <Heart
+                    className={`w-5 h-5 ${isLiked ? "text-red-500 fill-red-500" : "text-text-primary fill-none"}`}
+                  />
+                </Button>
               </div>
 
               <div className="relative bg-white rounded-lg shadow-lg p-4 border border-gray-300">

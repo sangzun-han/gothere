@@ -3,7 +3,7 @@
 import { Suspense } from "react";
 import { ApiErrorBoundary } from "@/components/error/api-error-boundary";
 import { QueryErrorResetBoundary } from "@tanstack/react-query";
-import PostDetail from "../_components/post-detail";
+import PostDetail from "../../../../components/posts/post-detail";
 import PostDetailFallback from "@/components/fallback/post-detail-fallback";
 
 export default function Page({ params }: { params: { id: string } }) {

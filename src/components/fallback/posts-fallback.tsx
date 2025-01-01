@@ -1,4 +1,4 @@
-export default function NearbyFallback() {
+export default function PostsFallback() {
   return (
     <article className="bg-white p-4 min-h-screen">
       <section className="space-y-6">

@@ -4,13 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Edit3, FileText, Star } from "lucide-react";
 import { useState } from "react";
 import { useGetUser, useUpdateUser } from "@/lib/api/user/hooks";
-import { notFound } from "next/navigation";
+import { notFound, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import ComingSoonDialog from "@/components/modal/coming-soon-dialog";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 
 export default function ProfileSection() {
+  const router = useRouter();
   const { data } = useGetUser();
   const { toast } = useToast();
   const { mutateAsync } = useUpdateUser();
@@ -84,7 +85,7 @@ export default function ProfileSection() {
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => router.push("/mypage/posts")}
           >
             <FileText className="w-4 h-4 text-text-secondary" />
             <span className="text-sm text-text-primary">내가 쓴 글</span>

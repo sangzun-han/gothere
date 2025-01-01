@@ -35,6 +35,22 @@ export interface PostListResponse {
   error?: string;
 }
 
+export interface SupabasePostDetail {
+  title: string;
+  content: string;
+  location: string;
+  images: string[];
+  thumbnail_blur_image: string;
+  created_at: string;
+  latitude: number;
+  longitude: number;
+  users: {
+    nickname: string;
+    profile_url: string | null;
+  };
+  favorites?: { user_id: string }[];
+}
+
 export interface PostDetail {
   title: string;
   content: string;
@@ -48,6 +64,7 @@ export interface PostDetail {
     nickname: string;
     profile_url: string | null;
   };
+  isLiked: boolean;
 }
 
 export interface PostDetailResponse {

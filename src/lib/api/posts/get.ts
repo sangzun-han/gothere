@@ -65,3 +65,11 @@ export async function getPostDetail(id: string) {
 
   return response.json();
 }
+
+export async function getMyPostList(page: number = 1, limit: number = 30): Promise<PostListResponse> {
+  const queryParams = new URLSearchParams({ page: page.toString(), limit: limit.toString() });
+  const response = await fetch(`/api/posts/my?${queryParams.toString()}`);
+  if (!response.ok) throw new Error("내 게시글 조회 중 오류가 발생했습니다.");
+
+  return response.json();
+}

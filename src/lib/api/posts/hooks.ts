@@ -14,6 +14,10 @@ export function usePostDetailById(id: string) {
   return useSuspenseQuery<PostDetailResponse>(queryOptions.PostDetailById(id));
 }
 
+export function useMyPostList(limit: number) {
+  return useSuspenseInfiniteQuery(queryOptions.MyPost(limit));
+}
+
 export function useUpdateLike(postId: string) {
   const queryClient = useQueryClient();
 

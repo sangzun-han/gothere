@@ -88,7 +88,11 @@ export default function ProfileSection() {
             <FileText className="w-4 h-4 text-text-secondary" />
             <span className="text-sm text-text-primary">내가 쓴 글</span>
           </Button>
-          <Button variant="outline" className="flex items-center justify-center gap-2">
+          <Button
+            variant="outline"
+            className="flex items-center justify-center gap-2"
+            onClick={() => router.push("/likes")}
+          >
             <Star className="w-5 h-5 text-yellow-500" />
             <span className="text-sm text-text-primary">관심 목록</span>
           </Button>

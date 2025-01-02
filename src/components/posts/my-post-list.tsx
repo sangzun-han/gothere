@@ -26,7 +26,8 @@ export default function MyPostList() {
     pathPattern: "/posts/my",
   });
 
-  if (hasNoPosts) return <NoPost />;
+  if (hasNoPosts)
+    return <NoPost title="작성한 게시글이 없습니다" description="내가 작성한 게시글이 없습니다. 글을 작성해보세요!" />;
 
   return (
     <>

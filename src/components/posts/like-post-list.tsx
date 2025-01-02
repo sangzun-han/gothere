@@ -26,7 +26,13 @@ export default function LikePostList() {
     pathPattern: "/posts/likes",
   });
 
-  if (hasNoPosts) return <NoPost />;
+  if (hasNoPosts)
+    return (
+      <NoPost
+        title="즐겨찾기한 게시글이 없습니다"
+        description="즐겨찾기한 게시글이 존재하지 않습니다. 게시글을 즐겨찾기 해보세요!"
+      />
+    );
 
   return (
     <>

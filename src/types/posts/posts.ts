@@ -45,6 +45,7 @@ export interface SupabasePostDetail {
   latitude: number;
   longitude: number;
   users: {
+    id: string;
     nickname: string;
     profile_url: string | null;
   };
@@ -61,6 +62,7 @@ export interface PostDetail {
   latitude: number;
   longitude: number;
   users: {
+    id: string;
     nickname: string;
     profile_url: string | null;
   };

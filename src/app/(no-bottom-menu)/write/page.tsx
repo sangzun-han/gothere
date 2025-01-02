@@ -23,11 +23,13 @@ import Spinner from "@/components/spinner/spinner";
 import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
 import { LocationSelect } from "@/types/location/location";
 import { uploadImages } from "@/utils/image/upload-supabase-image";
+import { useQueryClient } from "@tanstack/react-query";
 
 type PostFormValues = z.infer<typeof PostFormValidation>;
 
 export default function Page() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { toast } = useToast();
 
   const form = useForm<PostFormValues>({
@@ -90,6 +92,9 @@ export default function Page() {
       };
 
       await createPost(postData);
+
+      queryClient.removeQueries({ queryKey: ["posts"] });
+      queryClient.removeQueries({ queryKey: ["postList"] });
 
       toast({
         title: "작성 완료",

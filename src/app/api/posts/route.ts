@@ -53,7 +53,7 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
 
     if (!isValidLocation) {
       return NextResponse.json(
-        { success: false, error: "위치가 해당 동의 경계 안에 포함되지 않습니다." },
+        { success: false, message: "위치가 해당 동의 경계 안에 포함되지 않습니다." },
         { status: 400 }
       );
     }
@@ -84,11 +84,11 @@ export async function POST(req: NextRequest): Promise<NextResponse<ApiResponse>>
     );
   } catch (error) {
     if (error instanceof ZodError) {
-      return NextResponse.json({ success: false, error: "입력 데이터가 유효하지 않습니다." }, { status: 400 });
+      return NextResponse.json({ success: false, message: "입력 데이터가 유효하지 않습니다." }, { status: 400 });
     }
 
     return NextResponse.json(
-      { success: false, error: "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요." },
+      { success: false, message: "서버에서 오류가 발생했습니다. 잠시 후 다시 시도해주세요." },
       { status: 500 }
     );
   }

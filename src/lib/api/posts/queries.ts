@@ -1,6 +1,7 @@
 import { GeoPostsResponse, PostDetailResponse, PostListResponse } from "@/types/posts/posts";
 import { getLikePostList, getMyPostList, getPostDetail, getPostListByLocation, getPostsByLocation } from "./get";
 import { updateLike } from "./update";
+import { deletePost } from "./delete";
 
 const queryKeys = {
   PostsByLocation: (si: string, gu: string, dong: string) => ["posts", si, gu, dong] as const,
@@ -70,12 +71,18 @@ const queryOptions = {
 
 const mutationKeys = {
   UpdateLike: (postId: string) => ["updateLike", postId] as const,
+  DeletePost: (postId: string) => ["deletePost", postId] as const,
 };
 
 const mutationOptions = {
   UpdateLike: (postId: string) => ({
     mutationKey: mutationKeys.UpdateLike(postId),
     mutationFn: (): Promise<{ isLiked: boolean }> => updateLike(postId),
+  }),
+
+  DeletePost: (postId: string) => ({
+    mutationKey: mutationKeys.DeletePost(postId),
+    mutationFn: (): Promise<void> => deletePost(postId),
   }),
 };
 

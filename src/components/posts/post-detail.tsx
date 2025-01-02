@@ -6,6 +6,7 @@ import { Heart, MapPin } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Map } from "react-kakao-maps-sdk";
+import PostDetailHeader from "../header/post-detail-header";
 
 export default function PostDetail({ uuid }: { uuid: string }) {
   const { data } = usePostDetailById(uuid);
@@ -23,11 +24,12 @@ export default function PostDetail({ uuid }: { uuid: string }) {
     latitude,
     longitude,
     isLiked,
-    users: { nickname, profile_url },
+    users: { id: user_id, nickname, profile_url },
   } = data.data;
 
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
+      <PostDetailHeader id={uuid} postAuthorId={user_id} />
       <article className="bg-white">
         <div className="w-full bg-white overflow-hidden">
           <section className="relative h-64">

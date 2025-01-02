@@ -7,7 +7,7 @@ const queryKeys = {
   PostsByLocation: (si: string, gu: string, dong: string) => ["posts", si, gu, dong] as const,
   PostListByLocation: (si: string, gu: string, dong: string) => ["postList", location] as const,
   PostDetailById: (id: string) => ["postDetail", id] as const,
-  MyPost: () => ["mypost"] as const,
+  MyPost: () => ["myPost"] as const,
   LikePostList: () => ["likePosts"] as const,
 };
 

@@ -72,6 +72,9 @@ export function useDeletePost(postId: string) {
       });
       queryClient.removeQueries({ queryKey: ["posts"] });
       queryClient.removeQueries({ queryKey: ["postList"] });
+      queryClient.removeQueries({ queryKey: ["myPost"] });
+      queryClient.removeQueries({ queryKey: ["likePosts"] });
+
       queryClient.removeQueries({
         queryKey: queryKeys.PostDetailById(postId),
       });

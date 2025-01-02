@@ -95,6 +95,7 @@ export default function Page() {
 
       queryClient.removeQueries({ queryKey: ["posts"] });
       queryClient.removeQueries({ queryKey: ["postList"] });
+      queryClient.removeQueries({ queryKey: ["myPost"] });
 
       toast({
         title: "작성 완료",

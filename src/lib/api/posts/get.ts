@@ -73,3 +73,11 @@ export async function getMyPostList(page: number = 1, limit: number = 30): Promi
 
   return response.json();
 }
+
+export async function getLikePostList(page: number, limit: number = 30): Promise<PostListResponse> {
+  const queryParams = new URLSearchParams({ page: page.toString(), limit: limit.toString() });
+  const response = await fetch(`/api/posts/like?${queryParams.toString()}`);
+  if (!response.ok) throw new Error("관심목록 조회 중 오류가 발생했습니다.");
+
+  return response.json();
+}

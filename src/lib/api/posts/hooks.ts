@@ -49,3 +49,7 @@ export function useUpdateLike(postId: string) {
     },
   });
 }
+
+export function useLikePostList(limit: number) {
+  return useSuspenseInfiniteQuery(queryOptions.LikePostList(limit));
+}

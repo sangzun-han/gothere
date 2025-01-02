@@ -1,5 +1,5 @@
 import { GeoPostsResponse, PostDetailResponse, PostListResponse } from "@/types/posts/posts";
-import { getMyPostList, getPostDetail, getPostListByLocation, getPostsByLocation } from "./get";
+import { getLikePostList, getMyPostList, getPostDetail, getPostListByLocation, getPostsByLocation } from "./get";
 import { updateLike } from "./update";
 
 const queryKeys = {
@@ -7,6 +7,7 @@ const queryKeys = {
   PostListByLocation: (si: string, gu: string, dong: string) => ["postList", location] as const,
   PostDetailById: (id: string) => ["postDetail", id] as const,
   MyPost: () => ["mypost"] as const,
+  LikePostList: () => ["likePosts"] as const,
 };
 
 const queryOptions = {
@@ -41,6 +42,20 @@ const queryOptions = {
   MyPost: (limit: number) => ({
     queryKey: queryKeys.MyPost(),
     queryFn: ({ pageParam = 1 }): Promise<PostListResponse> => getMyPostList(pageParam, limit),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: PostListResponse, allPages: PostListResponse[]) => {
+      if (lastPage.data.length < limit) {
+        return undefined;
+      }
+      return allPages.length + 1;
+    },
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 5 * 60 * 1000,
+  }),
+
+  LikePostList: (limit: number) => ({
+    queryKey: queryKeys.LikePostList(),
+    queryFn: ({ pageParam = 1 }): Promise<PostListResponse> => getLikePostList(pageParam, limit),
     initialPageParam: 1,
     getNextPageParam: (lastPage: PostListResponse, allPages: PostListResponse[]) => {
       if (lastPage.data.length < limit) {

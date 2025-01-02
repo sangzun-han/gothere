@@ -7,7 +7,6 @@ import { useGetUser, useUpdateUser } from "@/lib/api/user/hooks";
 import { notFound, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
-import ComingSoonDialog from "@/components/modal/coming-soon-dialog";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 
 export default function ProfileSection() {
@@ -16,7 +15,6 @@ export default function ProfileSection() {
   const { toast } = useToast();
   const { mutateAsync } = useUpdateUser();
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   if (!data || !data.data) return notFound();
@@ -93,15 +91,13 @@ export default function ProfileSection() {
           <Button
             variant="outline"
             className="flex items-center justify-center gap-2"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => router.push("/likes")}
           >
             <Star className="w-5 h-5 text-yellow-500" />
             <span className="text-sm text-text-primary">관심 목록</span>
           </Button>
         </div>
       </div>
-
-      <ComingSoonDialog isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       <EditProfileDialog
         isOpen={isEditModalOpen}

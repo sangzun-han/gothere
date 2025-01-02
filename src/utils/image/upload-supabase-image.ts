@@ -1,14 +1,16 @@
 "use client";
 
-import { supabase } from "../supabase/js-client";
 import { StorageApiError, StorageUnknownError } from "@supabase/storage-js/dist/module/lib/errors";
+import { sanitizeFilename } from "./sanitize-filename";
+import browserClient from "../supabase/client";
 
 export const uploadImages = async (files: File[]): Promise<string[]> => {
   try {
     const uploadUrls = await Promise.all(
       files.map(async (file) => {
-        const fileName = `${Date.now()}-${file.name}`;
-        const { error } = await supabase.storage.from("post-images").upload(fileName, file);
+        const sanitizedFileName = sanitizeFilename(file.name);
+        const fileName = `${Date.now()}-${sanitizedFileName}`;
+        const { error } = await browserClient.storage.from("post-images").upload(fileName, file);
 
         if (error) {
           if (error instanceof StorageApiError) {
@@ -19,8 +21,7 @@ export const uploadImages = async (files: File[]): Promise<string[]> => {
             throw new Error("예상치 못한 에러 발생");
           }
         }
-
-        const { data: publicData } = supabase.storage.from("post-images").getPublicUrl(fileName);
+        const { data: publicData } = browserClient.storage.from("post-images").getPublicUrl(fileName);
         if (!publicData) {
           throw new StorageUnknownError("이미지 URL 생성 실패", null);
         }

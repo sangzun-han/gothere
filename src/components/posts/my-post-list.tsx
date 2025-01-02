@@ -7,10 +7,12 @@ import { POST_LIST_PREVIOUS_PATH_KEY, POST_LIST_SCROLL_POSITION_KEY } from "@/co
 import PostItem from "./post-item";
 import Spinner from "@/components/spinner/spinner";
 import useScrollRestoration from "@/hooks/ui/use-scroll-restoration";
+import NoPost from "./no-post";
 
 export default function MyPostList() {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useMyPostList(30);
   const posts = useMemo(() => data?.pages.flatMap((posts) => posts), [data]);
+  const hasNoPosts = posts.every((page) => page.data.length === 0);
 
   const observerRef = useIntersectionObserver({
     onIntersect: () => fetchNextPage(),
@@ -23,6 +25,9 @@ export default function MyPostList() {
     previousPathKey: POST_LIST_PREVIOUS_PATH_KEY,
     pathPattern: "/posts/my",
   });
+
+  if (hasNoPosts)
+    return <NoPost title="작성한 게시글이 없습니다" description="내가 작성한 게시글이 없습니다. 글을 작성해보세요!" />;
 
   return (
     <>

@@ -7,10 +7,12 @@ import { POST_LIST_PREVIOUS_PATH_KEY, POST_LIST_SCROLL_POSITION_KEY } from "@/co
 import PostItem from "./post-item";
 import Spinner from "@/components/spinner/spinner";
 import useScrollRestoration from "@/hooks/ui/use-scroll-restoration";
+import NoPost from "./no-post";
 
 export default function PostList({ si, gu, dong }: { si: string; gu: string; dong: string }) {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = usePostListByLocation(si, gu, dong, 30);
   const posts = useMemo(() => data?.pages.flatMap((posts) => posts), [data]);
+  const hasNoPosts = posts.every((page) => page.data.length === 0);
 
   const observerRef = useIntersectionObserver({
     onIntersect: () => fetchNextPage(),
@@ -23,6 +25,8 @@ export default function PostList({ si, gu, dong }: { si: string; gu: string; don
     previousPathKey: POST_LIST_PREVIOUS_PATH_KEY,
     pathPattern: "/posts/",
   });
+
+  if (hasNoPosts) return <NoPost />;
 
   return (
     <>

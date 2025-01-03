@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { queryOptions } from "./queries";
-import { UserProfileResponse } from "@/types/user/user";
+import { UserProfileResponse, UserStatsResponse } from "@/types/user/user";
 import { updateUser } from "./update";
 
 export function useGetUser() {
@@ -20,5 +20,5 @@ export function useUpdateUser() {
 }
 
 export function useGetUserStats() {
-  return useSuspenseQuery(queryOptions.UserStatus());
+  return useSuspenseQuery<UserStatsResponse>(queryOptions.UserStatus());
 }

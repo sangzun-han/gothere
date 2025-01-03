@@ -22,6 +22,7 @@ export default function ProfileSection() {
   if (!data || !data.data) return notFound();
 
   const { nickname, profile_url } = data.data;
+  const { postCount, favoritesCount } = userStats.data ?? { postCount: 0, favoritesCount: 0 };
 
   const handleSave = async (updatedData: { nickname: string; profileUrl?: string | File }) => {
     const isImageChanged = updatedData.profileUrl && updatedData.profileUrl !== profile_url;
@@ -82,8 +83,8 @@ export default function ProfileSection() {
         </div>
 
         <div className="mt-6 grid grid-cols-2 max-w-md mx-auto text-center gap-4">
-          <ProfileStat label="게시글" value={userStats.data.postCount} />
-          <ProfileStat label="관심목록" value={userStats.data.favoritesCount} />
+          <ProfileStat label="게시글" value={postCount} />
+          <ProfileStat label="관심목록" value={favoritesCount} />
         </div>
       </div>
 

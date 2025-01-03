@@ -1,4 +1,4 @@
-import { UserProfileResponse } from "@/types/user/user";
+import { UserProfileResponse, UserStatsResponse } from "@/types/user/user";
 import { getUser, getUserStats } from "./get";
 import { updateUser } from "./update";
 
@@ -17,7 +17,7 @@ const queryOptions = {
 
   UserStatus: () => ({
     queryKey: queryKeys.UserStats(),
-    queryFn: async () => getUserStats(),
+    queryFn: async (): Promise<UserStatsResponse> => getUserStats(),
     staleTime: 5 * 60 * 1000,
     cacheTime: 5 * 60 * 1000,
   }),

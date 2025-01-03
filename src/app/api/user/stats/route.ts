@@ -1,7 +1,8 @@
+import { UserStatsResponse } from "@/types/user/user";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest): Promise<NextResponse<UserStatsResponse>> {
   const supabase = await createClient();
 
   try {

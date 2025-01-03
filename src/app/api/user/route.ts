@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
     } = await supabase.auth.getUser();
 
     if (authError || !user) {
-      return NextResponse.json({ success: false, data: null, error: "사용자 인증에 실패했습니다." }, { status: 401 });
+      return NextResponse.json({ success: false, data: null, message: "사용자 인증에 실패했습니다." }, { status: 401 });
     }
 
     const { data, error } = await supabase
@@ -22,7 +22,7 @@ export async function GET(req: NextRequest) {
       .single<UserProfile>();
 
     if (error || !data) {
-      return NextResponse.json({ success: false, data: null, error: "사용자를 찾을 수 없습니다." }, { status: 404 });
+      return NextResponse.json({ success: false, data: null, message: "사용자를 찾을 수 없습니다." }, { status: 404 });
     }
 
     const userProfile: UserProfile = {
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
     return NextResponse.json({ success: true, data: userProfile }, { status: 200 });
   } catch (error: any) {
     return NextResponse.json(
-      { success: false, data: null, error: error.message || "서버 오류가 발생했습니다." },
+      { success: false, data: null, message: error.message || "서버 오류가 발생했습니다." },
       { status: 500 }
     );
   }
@@ -50,7 +50,7 @@ export async function PUT(req: NextRequest) {
 
     if (authError || !user) {
       return NextResponse.json(
-        { success: false, error: "유효하지 않은 인증입니다. 다시 로그인하세요." },
+        { success: false, message: "유효하지 않은 인증입니다. 다시 로그인하세요." },
         { status: 401 }
       );
     }
@@ -60,7 +60,7 @@ export async function PUT(req: NextRequest) {
     const profileBlob = formData.get("profileUrl") as Blob | null;
 
     if (!nickname) {
-      return NextResponse.json({ success: false, error: "닉네임은 필수 항목입니다." }, { status: 400 });
+      return NextResponse.json({ success: false, message: "닉네임은 필수 항목입니다." }, { status: 400 });
     }
 
     let uploadedUrl: string | null = null;
@@ -94,16 +94,10 @@ export async function PUT(req: NextRequest) {
       throw new Error("프로필 업데이트 중 오류가 발생했습니다.");
     }
 
-    return NextResponse.json({
-      success: true,
-      message: "프로필이 성공적으로 업데이트되었습니다.",
-    });
+    return NextResponse.json({ success: true, message: "프로필이 성공적으로 업데이트되었습니다." });
   } catch (error: any) {
     return NextResponse.json(
-      {
-        success: false,
-        error: error instanceof Error ? error.message : "서버에서 오류가 발생했습니다.",
-      },
+      { success: false, message: error instanceof Error ? error.message : "서버에서 오류가 발생했습니다." },
       { status: 500 }
     );
   }

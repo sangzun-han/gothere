@@ -6,5 +6,16 @@ export interface UserProfile {
 export interface UserProfileResponse {
   success: boolean;
   data: UserProfile | null;
-  error?: string;
+  message?: string;
+}
+
+export interface UserStats {
+  postCount: number;
+  favoritesCount: number;
+}
+
+export interface UserStatsResponse {
+  success: boolean;
+  data: UserStats | null;
+  message?: string;
 }

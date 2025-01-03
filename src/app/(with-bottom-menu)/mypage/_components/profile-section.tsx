@@ -3,16 +3,17 @@
 import { Button } from "@/components/ui/button";
 import { Edit3 } from "lucide-react";
 import { useState } from "react";
-import { useGetUser, useUpdateUser } from "@/lib/api/user/hooks";
+import { useGetUser, useGetUserStats, useUpdateUser } from "@/lib/api/user/hooks";
 import { notFound, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
-import ProfileMetric from "./profile-metric";
+import ProfileStat from "./profile-stat";
 
 export default function ProfileSection() {
   const router = useRouter();
   const { data } = useGetUser();
+  const { data: userStats } = useGetUserStats();
   const { toast } = useToast();
   const { mutateAsync } = useUpdateUser();
 
@@ -21,6 +22,7 @@ export default function ProfileSection() {
   if (!data || !data.data) return notFound();
 
   const { nickname, profile_url } = data.data;
+  const { postCount, favoritesCount } = userStats.data ?? { postCount: 0, favoritesCount: 0 };
 
   const handleSave = async (updatedData: { nickname: string; profileUrl?: string | File }) => {
     const isImageChanged = updatedData.profileUrl && updatedData.profileUrl !== profile_url;
@@ -81,8 +83,8 @@ export default function ProfileSection() {
         </div>
 
         <div className="mt-6 grid grid-cols-2 max-w-md mx-auto text-center gap-4">
-          <ProfileMetric label="게시글" value="50" />
-          <ProfileMetric label="관심목록" value="13" />
+          <ProfileStat label="게시글" value={postCount} />
+          <ProfileStat label="관심목록" value={favoritesCount} />
         </div>
       </div>
 

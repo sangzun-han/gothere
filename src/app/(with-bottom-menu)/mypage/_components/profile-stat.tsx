@@ -1,4 +1,4 @@
-export default function ProfileMetric({ label, value }: { label: string; value: string }) {
+export default function ProfileStat({ label, value }: { label: string; value: string }) {
   return (
     <div className="w-full">
       <div className="text-xl font-bold">{value}</div>

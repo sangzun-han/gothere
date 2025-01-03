@@ -18,3 +18,7 @@ export function useUpdateUser() {
     },
   });
 }
+
+export function useGetUserStats() {
+  return useSuspenseQuery(queryOptions.UserStatus());
+}

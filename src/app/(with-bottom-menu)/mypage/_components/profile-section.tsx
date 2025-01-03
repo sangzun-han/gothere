@@ -9,6 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 import ProfileStat from "./profile-stat";
+import browserClient from "@/utils/supabase/client";
 
 export default function ProfileSection() {
   const router = useRouter();
@@ -99,7 +100,14 @@ export default function ProfileSection() {
         </div>
         <hr className="border-gray-200" />
 
-        <div className="px-4 py-3 cursor-pointer">로그아웃</div>
+        <div
+          className="px-4 py-3 cursor-pointer"
+          onClick={async () => {
+            await browserClient.auth.signOut();
+          }}
+        >
+          로그아웃
+        </div>
         <hr className="border-gray-200" />
       </div>
 

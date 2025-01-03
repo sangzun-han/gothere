@@ -77,11 +77,11 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
           </div>
 
           <div className="flex justify-end gap-3 mt-8">
-            <Button variant="outline" className="w-24" onClick={handleClose} type="button">
+            <Button variant="outline" onClick={handleClose} type="button">
               취소
             </Button>
             <Button
-              className={`w-full bg-brand-primary text-white border-none 
+              className={`bg-brand-primary text-white border-none 
                 disabled:bg-brand-primary/70 
                 disabled:cursor-not-allowed 
                 hover:bg-brand-hover`}

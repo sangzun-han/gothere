@@ -1,13 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Edit3, FileText, Star } from "lucide-react";
+import { Edit3 } from "lucide-react";
 import { useState } from "react";
 import { useGetUser, useUpdateUser } from "@/lib/api/user/hooks";
 import { notFound, useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
+import ProfileMetric from "./profile-metric";
 
 export default function ProfileSection() {
   const router = useRouter();
@@ -53,50 +54,51 @@ export default function ProfileSection() {
       setIsEditModalOpen(false);
     }
   };
+
   return (
-    <section className="relative w-full flex-1 bg-white">
-      <div className="w-full bg-white shadow-lg px-4 pb-20">
-        <div className="flex flex-col items-center">
-          <div className="relative group">
-            <div className="w-32 h-32 rounded-full bg-white p-2 shadow-lg">
-              <Image
-                src={profile_url}
-                alt="profile"
-                width={128}
-                height={128}
-                className="w-full h-full rounded-full object-cover hover:opacity-90 transition-opacity"
-                priority
-              />
-            </div>
-            <Button
-              className="absolute bottom-2 right-2 p-2 bg-brand-primary rounded-full hover:bg-brand-hover"
-              size="icon"
-              onClick={() => setIsEditModalOpen(true)}
-            >
-              <Edit3 className="w-4 h-4 text-white" />
-            </Button>
-          </div>
-          <h1 className="text-xl font-semibold mt-4">{nickname}</h1>
+    <section className="w-full">
+      <div className="relative w-full h-32 bg-brand-primary" />
+      <div className="relative">
+        <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md">
+          <Image
+            src={profile_url}
+            alt="profile"
+            width={96}
+            height={96}
+            className="w-full h-full rounded-full object-cover hover:opacity-90 transition-opacity"
+            priority
+          />
+        </div>
+      </div>
+
+      <div className="mt-12 text-center">
+        <h1 className="text-lg font-semibold">{nickname}</h1>
+        <div className="flex flex-wrap items-center justify-center gap-2">
+          <Button variant="link" size="sm" onClick={() => setIsEditModalOpen(true)}>
+            <Edit3 className="w-4 h-4" />
+            프로필 편집
+          </Button>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <Button
-            variant="outline"
-            className="flex items-center justify-center gap-2"
-            onClick={() => router.push("/mypage/posts")}
-          >
-            <FileText className="w-4 h-4 text-text-secondary" />
-            <span className="text-sm text-text-primary">내가 쓴 글</span>
-          </Button>
-          <Button
-            variant="outline"
-            className="flex items-center justify-center gap-2"
-            onClick={() => router.push("/likes")}
-          >
-            <Star className="w-5 h-5 text-yellow-500" />
-            <span className="text-sm text-text-primary">관심 목록</span>
-          </Button>
+        <div className="mt-6 grid grid-cols-2 max-w-md mx-auto text-center gap-4">
+          <ProfileMetric label="게시글" value="50" />
+          <ProfileMetric label="관심목록" value="13" />
         </div>
+      </div>
+
+      <div className="max-w-full mt-8 flex flex-col gap-2">
+        <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/mypage/posts")}>
+          내가 쓴 글
+        </div>
+        <hr className="border-gray-200" />
+
+        <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/likes")}>
+          관심 목록
+        </div>
+        <hr className="border-gray-200" />
+
+        <div className="px-4 py-3 cursor-pointer">로그아웃</div>
+        <hr className="border-gray-200" />
       </div>
 
       <EditProfileDialog

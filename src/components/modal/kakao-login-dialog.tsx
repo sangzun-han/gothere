@@ -26,10 +26,10 @@ export default function KakaoLoginDialog({ isOpen, onClose }: KakaoLoginDialogPr
   if (isDesktop) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="z-[999] md:max-w-[375px] md:max-h-[250px] w-full md:rounded-md">
+        <DialogContent className="z-[999] md:max-w-[375px] md:max-h-[280px] w-full md:rounded-md">
           <DialogHeader>
-            <DialogTitle>카카오톡 로그인</DialogTitle>
-            <DialogDescription>카카오톡 계정으로 로그인하여 더 많은 기능을 이용해보세요.</DialogDescription>
+            <DialogTitle>로그인</DialogTitle>
+            <DialogDescription>로그인하여 더 많은 기능을 이용해보세요.</DialogDescription>
           </DialogHeader>
           <LoginContent onClose={onClose} />
         </DialogContent>
@@ -41,8 +41,8 @@ export default function KakaoLoginDialog({ isOpen, onClose }: KakaoLoginDialogPr
     <Drawer open={isOpen} onOpenChange={onClose}>
       <DrawerContent className="z-[999] h-auto max-h-[fit-content]">
         <DrawerHeader className="text-left">
-          <DrawerTitle>카카오톡 로그인</DrawerTitle>
-          <DrawerDescription>카카오톡 계정으로 로그인하여 더 많은 기능을 이용해보세요.</DrawerDescription>
+          <DrawerTitle>로그인</DrawerTitle>
+          <DrawerDescription>로그인하여 더 많은 기능을 이용해보세요.</DrawerDescription>
         </DrawerHeader>
         <DrawerFooter>
           <LoginContent onClose={onClose} />
@@ -62,6 +62,13 @@ function LoginContent({ onClose }: { onClose: () => void }) {
     });
   };
 
+  const signInWithEmail = async () => {
+    const { data } = await browserClient.auth.signInWithPassword({
+      email: "guest@guest.com",
+      password: "guest",
+    });
+  };
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <Button
@@ -72,7 +79,13 @@ function LoginContent({ onClose }: { onClose: () => void }) {
         <Image src="/kakao-icon.svg" alt="카카오 로고" className="w-5 h-5 mr-2" width={20} height={20} />
         카카오로 로그인하기
       </Button>
-
+      <Button
+        className="w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+        size="lg"
+        onClick={signInWithEmail}
+      >
+        게스트 계정으로 로그인하기
+      </Button>
       <Button
         className="w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
         size="lg"

@@ -41,7 +41,7 @@ export default function KakaoMapView() {
     >
       <MyMarker latitude={location.latitude} longitude={location.longitude} />
       <PostMarkers geoPosts={geoPosts.data} onPostClick={handlePostClick} />
-      <PostsCarousel geoPosts={geoPosts?.data} dong={location.dong} selectedPostIndex={selectedPostIndex} />
+      {/* <PostsCarousel geoPosts={geoPosts?.data} dong={location.dong} selectedPostIndex={selectedPostIndex} /> */}
       <KakaoPolygon polygonPaths={polygonPaths} />
       <ReturnToLocationButton onClick={returnToInitialLocation} />
     </Map>

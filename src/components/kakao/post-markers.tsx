@@ -11,7 +11,7 @@ export default function PostMarkers({ geoPosts, onPostClick }: PostMarkersProps)
   if (!geoPosts || geoPosts.length === 0) return null;
 
   return (
-    <MarkerClusterer averageCenter={true} minLevel={5}>
+    <MarkerClusterer averageCenter={true} minLevel={1}>
       {geoPosts.map((geoPost, index) => {
         const { id, title, thumbnail: image, latitude: lat, longitude: lng, thumbnail_blur_image } = geoPost;
 

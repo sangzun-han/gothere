@@ -7,8 +7,9 @@ import OverlayContainer from "./widgets/overlay-container";
 import ConditionalRender from "./widgets/conditional-render";
 import PostOverlay from "./widgets/post-overlay";
 import MapMarkerClickArea from "./widgets/map-marker-click-area";
-import useCanvasMarkers, { MarkerPosition } from "@/hooks/kakao/use-canvas-markers";
+import useKakaoMapMarkerCluster from "@/hooks/kakao/use-kakao-map-marker-cluster";
 import { useMapEventHandler } from "@/hooks/kakao";
+import { GeoPostMarker } from "@/types/coordinate/coordinate";
 
 interface PostMarkersCanvasProps {
   map: kakao.maps.Map;
@@ -17,16 +18,16 @@ interface PostMarkersCanvasProps {
 }
 
 const PostMarkersCanvas: React.FC<PostMarkersCanvasProps> = ({ map, geoPosts, isReturning }) => {
-  const markerPositionsRef = useRef<MarkerPosition[]>([]);
+  const markerPositionsRef = useRef<GeoPostMarker[]>([]);
   const selectedPostRef = useRef<GeoPost | null>(null);
   const [selectedPost, setSelectedPost] = useState<GeoPost | null>(null);
   const [isZooming, setIsZooming] = useState<boolean>(false);
 
-  const handleMarkersUpdated = useCallback((markers: MarkerPosition[]) => {
+  const handleMarkersUpdated = useCallback((markers: GeoPostMarker[]) => {
     markerPositionsRef.current = markers;
   }, []);
 
-  const { canvasRef, drawMarkers, clearCanvas } = useCanvasMarkers({
+  const { canvasRef, drawMarkers, clearCanvas } = useKakaoMapMarkerCluster({
     map,
     geoPosts,
     isReturning,
@@ -54,7 +55,7 @@ const PostMarkersCanvas: React.FC<PostMarkersCanvasProps> = ({ map, geoPosts, is
     onZoomEnd: handleZoomEnd,
   });
 
-  const handleMarkerClick = useCallback((marker: MarkerPosition) => {
+  const handleMarkerClick = useCallback((marker: GeoPostMarker) => {
     selectedPostRef.current = marker.post;
     setSelectedPost(marker.post);
   }, []);

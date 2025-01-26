@@ -1,10 +1,10 @@
-import { MarkerPosition } from "@/hooks/kakao/use-canvas-markers";
+import { GeoPostMarker } from "@/types/coordinate/coordinate";
 import { menuHeightAtom } from "@/recoil/layout/atoms";
 import { useRecoilValue } from "recoil";
 
 interface MapMarkerClickAreaProps {
-  markers: MarkerPosition[];
-  onMarkerClick: (marker: MarkerPosition) => void;
+  markers: GeoPostMarker[];
+  onMarkerClick: (marker: GeoPostMarker) => void;
 }
 const HIT_AREA_SIZE = 12;
 

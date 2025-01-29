@@ -4,20 +4,19 @@ import { CustomOverlayMap, MarkerClusterer } from "react-kakao-maps-sdk";
 
 interface PostMarkersProps {
   geoPosts: GeoPost[];
-  onPostClick: (index: number) => void;
 }
 
-export default function PostMarkers({ geoPosts, onPostClick }: PostMarkersProps) {
+export default function PostMarkers({ geoPosts }: PostMarkersProps) {
   if (!geoPosts || geoPosts.length === 0) return null;
 
   return (
-    <MarkerClusterer averageCenter={true} minLevel={5}>
+    <MarkerClusterer averageCenter={true} minLevel={1}>
       {geoPosts.map((geoPost, index) => {
         const { id, title, thumbnail: image, latitude: lat, longitude: lng, thumbnail_blur_image } = geoPost;
 
         return (
           <CustomOverlayMap key={id} position={{ lat, lng }}>
-            <div className="flex flex-col items-center" onClick={() => onPostClick(index)}>
+            <div className="flex flex-col items-center">
               <div className="w-10 h-10 bg-text-primary rounded-lg flex items-center justify-center p-[3px]">
                 <div className="w-full h-full rounded-md overflow-hidden">
                   <Image

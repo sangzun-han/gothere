@@ -14,13 +14,18 @@ interface LatLng {
 
 export default function useMapCenter(initialLocation: LatLng) {
   const [currentCenter, setCurrentCenter] = useState<LatLng>(initialLocation);
+  const [isReturning, setIsReturning] = useState(false);
 
   const updateCenter = useCallback((newCenter: LatLng) => {
     setCurrentCenter((prev) => (prev.lat !== newCenter.lat || prev.lng !== newCenter.lng ? newCenter : prev));
   }, []);
 
   const returnToInitialLocation = useCallback(() => {
+    setIsReturning(true);
     setCurrentCenter(initialLocation);
+    setTimeout(() => {
+      setIsReturning(false);
+    }, 500);
   }, [initialLocation]);
 
   useEffect(() => {
@@ -34,5 +39,6 @@ export default function useMapCenter(initialLocation: LatLng) {
     currentCenter,
     updateCenter,
     returnToInitialLocation,
+    isReturning,
   };
 }

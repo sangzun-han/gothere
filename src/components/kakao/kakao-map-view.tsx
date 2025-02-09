@@ -9,6 +9,7 @@ import { usePostsBytLocation } from "@/lib/api/posts/hooks";
 import { usePolygonCoordinates } from "@/lib/api/polygon/hooks";
 import { useState } from "react";
 import PostMarkersCanvas from "./post-markers-canvas";
+import NoPostMeesage from "./no-post-meesage";
 
 export default function KakaoMapView() {
   const [map, setMap] = useState<kakao.maps.Map | null>(null);
@@ -38,6 +39,8 @@ export default function KakaoMapView() {
       onCenterChanged={handleCenterChanged}
     >
       {map && <PostMarkersCanvas map={map} geoPosts={geoPosts?.data ?? []} isReturning={isReturning} />}
+      {(!geoPosts || geoPosts.data?.length === 0) && <NoPostMeesage dong={dong} />}
+      <MyMarker latitude={location.latitude} longitude={location.longitude} />
       <KakaoPolygon polygonPaths={polygonPaths} />
       <ReturnToLocationButton onClick={returnToInitialLocation} />
     </Map>

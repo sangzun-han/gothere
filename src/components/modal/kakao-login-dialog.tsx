@@ -39,7 +39,7 @@ export default function KakaoLoginDialog({ isOpen, onClose }: KakaoLoginDialogPr
 
   return (
     <Drawer open={isOpen} onOpenChange={onClose}>
-      <DrawerContent className="z-[999] h-auto max-h-[fit-content]">
+      <DrawerContent className="z-[999] h-auto max-h-[fit-content]" tabIndex={-1}>
         <DrawerHeader className="text-left">
           <DrawerTitle>로그인</DrawerTitle>
           <DrawerDescription>로그인하여 더 많은 기능을 이용해보세요.</DrawerDescription>

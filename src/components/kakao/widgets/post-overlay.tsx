@@ -39,7 +39,7 @@ export default function PostOverlay({ post, onClose, isReturning }: PostOverlayP
           <h3 className="text-base font-semibold truncate max-w-[85%]" title={post.title}>
             {post.title}
           </h3>
-          <Button size="icon" variant="link" onClick={onClose}>
+          <Button size="icon" variant="link" onClick={onClose} className="w-4">
             <X className="w-4 h-4" />
           </Button>
         </div>

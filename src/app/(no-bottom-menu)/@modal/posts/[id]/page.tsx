@@ -7,6 +7,7 @@ import KakaoLoginDialog from "@/components/modal/kakao-login-dialog";
 export default function LoginModal() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
+
   return (
     <KakaoLoginDialog
       isOpen={isOpen}

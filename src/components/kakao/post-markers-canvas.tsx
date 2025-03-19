@@ -55,7 +55,7 @@ const PostMarkersCanvas: React.FC<PostMarkersCanvasProps> = ({ map, geoPosts, is
     onZoomEnd: handleZoomEnd,
   });
 
-  const handleMarkerHover = useCallback((marker: GeoPostMarker) => {
+  const handleMarkerClick = useCallback((marker: GeoPostMarker) => {
     selectedPostRef.current = marker.post;
     setSelectedPost(marker.post);
   }, []);
@@ -77,11 +77,8 @@ const PostMarkersCanvas: React.FC<PostMarkersCanvasProps> = ({ map, geoPosts, is
 
       <MapMarkerClickArea
         markers={markerPositionsRef.current}
-        onMarkerHover={(marker) => {
-          handleMarkerHover(marker);
-        }}
-        onMarkerLeave={() => {
-          handleCloseOverlay();
+        onMarkerClick={(marker) => {
+          handleMarkerClick(marker);
         }}
       />
     </>

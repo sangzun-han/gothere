@@ -4,12 +4,11 @@ import { useRecoilValue } from "recoil";
 
 interface MapMarkerClickAreaProps {
   markers: GeoPostMarker[];
-  onMarkerHover: (marker: GeoPostMarker) => void;
-  onMarkerLeave: () => void;
+  onMarkerClick: (marker: GeoPostMarker) => void;
 }
 const HIT_AREA_SIZE = 12;
 
-export default function MapMarkerClickArea({ markers, onMarkerHover, onMarkerLeave }: MapMarkerClickAreaProps) {
+export default function MapMarkerClickArea({ markers, onMarkerClick }: MapMarkerClickAreaProps) {
   const menuHeight = useRecoilValue(menuHeightAtom);
 
   return (
@@ -30,8 +29,7 @@ export default function MapMarkerClickArea({ markers, onMarkerHover, onMarkerLea
             width: HIT_AREA_SIZE,
             height: HIT_AREA_SIZE,
           }}
-          onMouseEnter={() => onMarkerHover(marker)}
-          onMouseLeave={() => onMarkerLeave()}
+          onClick={() => onMarkerClick(marker)}
         />
       ))}
     </div>

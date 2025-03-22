@@ -8,7 +8,7 @@ import ProfileSectionFallback from "@/components/fallback/profile-section-fallba
 
 export default function Page() {
   return (
-    <main className="h-screen w-full flex flex-col bg-white">
+    <main className="h-screen w-full flex flex-col bg-app-background">
       <QueryErrorResetBoundary>
         {({ reset }) => (
           <ApiErrorBoundary onReset={reset}>

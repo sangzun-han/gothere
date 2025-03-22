@@ -10,10 +10,45 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        brand: {
-          primary: "#5952ff",
-          hover: "#4a42e6",
+        "app-background": "rgb(var(--app-background), <alpha-value>)",
+        gray: {
+          100: "var(--color-gray-100)",
+          200: "var(--color-gray-200)",
+          300: "var(--color-gray-300)",
+          400: "var(--color-gray-400)",
+          500: "var(--color-gray-500)",
+          600: "var(--color-gray-600)",
+          700: "var(--color-gray-700)",
+          800: "var(--color-gray-800)",
+          900: "var(--color-gray-900)",
         },
+        yellow: {
+          100: "var(--color-yellow-100)",
+          200: "var(--color-yellow-200)",
+          300: "var(--color-yellow-300)",
+          400: "var(--color-yellow-400)",
+          500: "var(--color-yellow-500)",
+          600: "var(--color-yellow-600)",
+          700: "var(--color-yellow-700)",
+          800: "var(--color-yellow-800)",
+          900: "var(--color-yellow-900)",
+        },
+        blue: {
+          100: "var(--color-blue-100)",
+          200: "var(--color-blue-200)",
+          300: "var(--color-blue-300)",
+          400: "var(--color-blue-400)",
+          500: "var(--color-blue-500)",
+          600: "var(--color-blue-600)",
+          700: "var(--color-blue-700)",
+          800: "var(--color-blue-800)",
+          900: "var(--color-blue-900)",
+        },
+        system: {
+          red: "var(--color-system-red)",
+          green: "var(--color-system-green)",
+        },
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

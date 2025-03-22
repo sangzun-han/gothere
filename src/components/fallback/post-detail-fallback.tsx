@@ -3,8 +3,8 @@ import { MapPin } from "lucide-react";
 export default function PostDetailFallback() {
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
-      <article className="bg-white">
-        <div className="w-full bg-white overflow-hidden">
+      <article className="bg-app-background">
+        <div className="w-full bg-app-background overflow-hidden">
           <section className="relative w-full h-64 bg-gray-300 animate-pulse">
             <div className="w-full h-full bg-gray-200"></div>
           </section>
@@ -21,7 +21,7 @@ export default function PostDetailFallback() {
 
             <section className="w-5/6 space-y-6">
               <div className="flex items-center space-x-4">
-                <figure className="w-12 h-12 flex-shrink-0 rounded-full border border-gray-300 p-1 bg-white shadow-md overflow-hidden">
+                <figure className="w-12 h-12 flex-shrink-0 rounded-full border border-gray-300 p-1 bg-app-background shadow-md overflow-hidden">
                   <div className="w-full h-full object-cover overflow-hidden bg-gray-200 animate-pulse rounded-full"></div>
                 </figure>
                 <div className="py-1 space-y-2 w-full">
@@ -30,7 +30,7 @@ export default function PostDetailFallback() {
                 </div>
               </div>
 
-              <div className="relative bg-white rounded-lg shadow-lg p-4 border-2 border-dashed border-gray-300">
+              <div className="relative bg-app-background rounded-lg shadow-lg p-4 border-2 border-dashed border-gray-300">
                 <div className="w-full h-6 bg-gray-200 animate-pulse rounded"></div>
                 <div className="w-full h-6 bg-gray-200 animate-pulse mt-2 rounded"></div>
                 <div className="w-full h-6 bg-gray-200 animate-pulse mt-2 rounded"></div>
@@ -38,7 +38,7 @@ export default function PostDetailFallback() {
 
               <section className="space-y-4">
                 <div className="flex space-x-2 items-center">
-                  <MapPin className="w-4 h-4 text-text-primary" />
+                  <MapPin className="w-4 h-4 text-gray-700" />
                   <div className="w-1/4 h-4 bg-gray-200 animate-pulse rounded"></div>
                 </div>
 

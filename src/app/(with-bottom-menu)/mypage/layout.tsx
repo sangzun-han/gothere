@@ -6,5 +6,5 @@ export default function MyPageLayout({ children, modal }: { children: React.Reac
   const { isLoggedIn } = useAuth();
   if (isLoggedIn === undefined) return null;
 
-  return <main className="h-screen w-full flex flex-col bg-white">{isLoggedIn ? children : modal}</main>;
+  return <main className="h-screen w-full flex flex-col bg-app-background">{isLoggedIn ? children : modal}</main>;
 }

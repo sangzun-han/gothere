@@ -135,7 +135,7 @@ export default function Page() {
               renderCustomField={({ field }) => (
                 <div className="relative" onClick={() => setCurrentModal(ModalType.KAKAOMAP)}>
                   <Input readOnly {...field} placeholder="위치를 선택하세요" className="text-sm cursor-pointer" />
-                  <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-primary cursor-pointer" />
+                  <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-500 cursor-pointer" />
                 </div>
               )}
             />
@@ -159,13 +159,13 @@ export default function Page() {
               placeholder="내용을 입력하세요"
             />
           </div>
-          <footer className="fixed bottom-0 w-full bg-white border-t border-gray-300 px-4 py-3">
+          <footer className="fixed bottom-0 w-full bg-app-background border-t border-gray-300 px-4 py-3">
             <Button
               type="submit"
-              className={`w-full bg-brand-primary text-white border-none 
-                disabled:bg-brand-primary/70 
+              className={`w-full bg-blue-500 text-white border-none 
+                disabled:bg-blue-500/70 
                 disabled:cursor-not-allowed 
-                hover:bg-brand-hover`}
+                hover:bg-blue-600`}
               disabled={isLoading}
             >
               {isLoading ? <Spinner /> : "작성하기"}

@@ -66,7 +66,7 @@ const renderField = (
             placeholder={placeholder || "위치를 선택하세요"}
             className="text-sm cursor-pointer"
           />
-          <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-brand-primary pointer-events-none" />
+          <MapPin className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-blue-500 pointer-events-none" />
         </div>
       );
     default:

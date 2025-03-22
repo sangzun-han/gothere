@@ -74,23 +74,23 @@ export default function DialogKakao({
           <div className="fixed top-4 right-4 z-50">
             <Button
               onClick={onClose}
-              className="p-2 bg-white rounded-full shadow-md text-lg font-bold hover:bg-secondary-dark"
+              className="p-2 bg-app-background hover:bg-app-background/80 rounded-full shadow-md text-lg font-bold"
               aria-label="닫기"
               size="icon"
             >
-              <X className="w-4 h-4 text-text-primary" />
+              <X className="w-4 h-4 text-gray-900" />
             </Button>
           </div>
-          <div className="fixed left-1/2 transform -translate-x-1/2 bottom-5 w-11/12 z-[99] bg-white shadow-lg rounded-lg p-4">
-            <h2 className="text-lg font-bold text-text-primary">장소는 여기!</h2>
+          <div className="fixed left-1/2 transform -translate-x-1/2 bottom-5 w-11/12 z-[99] bg-app-background shadow-lg rounded-lg p-4">
+            <h2 className="text-lg font-bold text-gray-900">장소는 여기!</h2>
 
             <div className="flex items-center text-xs text-gray-500 mb-2">
               <div className="flex items-center">
-                <span className="text-text-primary/70">{addressName}</span>
+                <span className="text-gray-700">{addressName}</span>
               </div>
             </div>
             <Button
-              className="bg-brand-primary hover:bg-brand-hover text-white p-2 rounded-lg w-full font-semibold text-sm"
+              className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-lg w-full font-semibold text-sm"
               onClick={async () => {
                 const adminDistrict = await handleCenterChange(currentCenter.lat, currentCenter.lng);
                 onSelect({

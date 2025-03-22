@@ -10,9 +10,11 @@ import Image from "next/image";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 import ProfileStat from "./profile-stat";
 import browserClient from "@/utils/supabase/client";
+import { useTheme } from "next-themes";
 
 export default function ProfileSection() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const { data } = useGetUser();
   const { data: userStats } = useGetUserStats();
   const { toast } = useToast();
@@ -60,7 +62,7 @@ export default function ProfileSection() {
 
   return (
     <section className="w-full">
-      <div className="relative w-full h-32 bg-brand-primary" />
+      <div className="relative w-full h-32 bg-blue-500" />
       <div className="relative">
         <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md">
           <Image
@@ -108,7 +110,14 @@ export default function ProfileSection() {
         >
           로그아웃
         </div>
+
         <hr className="border-gray-200" />
+      </div>
+
+      <div className="flex flex-col">
+        The current theme is: {theme}
+        <button onClick={() => setTheme("light")}>Light Mode</button>
+        <button onClick={() => setTheme("dark")}>Dark Mode</button>
       </div>
 
       <EditProfileDialog

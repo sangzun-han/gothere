@@ -8,15 +8,15 @@ interface MyMarkerProps {
 }
 
 export default function MyMarker({ latitude, longitude, role = "ME" }: MyMarkerProps) {
-  const bgClass = role === "ME" ? "bg-blue-200" : "bg-red-200";
-  const iconColor = role === "ME" ? "#5952FF" : "#FF5252";
+  const bgClass = role === "ME" ? "bg-blue-100" : "bg-yellow-100";
+  const iconClass = role === "ME" ? "text-blue-500" : "text-yellow-500";
 
   return (
     <CustomOverlayMap position={{ lat: latitude, lng: longitude }}>
       <div className="relative flex items-center justify-center">
         <div className={`absolute w-12 h-12 ${bgClass} rounded-full`}></div>
-        <div className="relative w-6 h-6" style={{ color: iconColor }}>
-          <MapPin size={24} fill={iconColor} stroke="none" />
+        <div className={`relative w-6 h-6 ${iconClass}`}>
+          <MapPin size={24} fill="currentColor" stroke="none" />
         </div>
       </div>
     </CustomOverlayMap>

@@ -14,7 +14,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="relative w-full h-screen bg-white">
+    <div className="relative w-full h-screen">
       <Suspense fallback={<KakaoMapViewFallback />}>
         <KakaoMapView />
       </Suspense>

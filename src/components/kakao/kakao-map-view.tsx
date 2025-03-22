@@ -1,7 +1,7 @@
 "use client";
 
 import { Map } from "react-kakao-maps-sdk";
-import { KakaoPolygon, ReturnToLocationButton, MyMarker, PostMarkers } from "@/components/kakao";
+import { KakaoPolygon, ReturnToLocationButton, MyMarker } from "@/components/kakao";
 import { useMapCenter } from "@/hooks/location";
 import { locationSelector } from "@/recoil/location/selector";
 import { useRecoilValue } from "recoil";

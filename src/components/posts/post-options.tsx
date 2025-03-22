@@ -31,7 +31,7 @@ export default function PostOptions({ postId }: { postId: string }) {
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button className="text-text-primary" type="button" size="icon" variant="ghost">
+          <Button className="text-gray-900" type="button" size="icon" variant="ghost">
             <MoreVertical className="w-6 h-6" />
           </Button>
         </DropdownMenuTrigger>
@@ -41,7 +41,7 @@ export default function PostOptions({ postId }: { postId: string }) {
       </DropdownMenu>
 
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent className="w-full max-w-[320px] md:max-w-[425px] p-4 rounded-lg shadow-lg bg-white">
+        <AlertDialogContent className="w-full max-w-[320px] md:max-w-[425px] p-4 rounded-lg shadow-lg bg-app-background">
           <AlertDialogHeader>
             <AlertDialogTitle>게시글을 삭제하시겠습니까?</AlertDialogTitle>
             <AlertDialogDescription>삭제된 게시글은 복구할 수 없습니다.</AlertDialogDescription>
@@ -49,7 +49,7 @@ export default function PostOptions({ postId }: { postId: string }) {
           <AlertDialogFooter>
             <AlertDialogCancel>취소</AlertDialogCancel>
             <AlertDialogAction
-              className={`bg-brand-primary text-white border-none disabled:bg-brand-primary/70 disabled:cursor-not-allowed hover:bg-brand-hover`}
+              className={`bg-blue-500 border-none disabled:bg-blue-500/70 disabled:cursor-not-allowed hover:bg-blue-600`}
               onClick={() => deletePostMutation.mutate()}
               disabled={deletePostMutation.isPending}
             >

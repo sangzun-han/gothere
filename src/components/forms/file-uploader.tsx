@@ -74,7 +74,7 @@ export default function FileUploader({ value, onChange }: FileUploaderProps) {
             {/* 삭제 버튼 */}
             <Button
               type="button"
-              className="absolute -top-2 -right-2 bg-white rounded-full p-1 w-6 h-6 border border-gray-300 hover:bg-gray-200"
+              className="absolute -top-2 -right-2 bg-app-background rounded-full p-1 w-6 h-6 border border-gray-300 hover:bg-gray-200"
               size="icon"
               onClick={() => handleRemoveImage(index)}
             >

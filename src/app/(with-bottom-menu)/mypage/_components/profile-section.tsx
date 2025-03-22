@@ -10,15 +10,19 @@ import Image from "next/image";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 import ProfileStat from "./profile-stat";
 import browserClient from "@/utils/supabase/client";
+import { useTheme } from "next-themes";
+import ThemeDrawer from "@/components/modal/theme-drawer";
 
 export default function ProfileSection() {
   const router = useRouter();
+  const { theme, setTheme } = useTheme();
   const { data } = useGetUser();
   const { data: userStats } = useGetUserStats();
   const { toast } = useToast();
   const { mutateAsync } = useUpdateUser();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
 
   if (!data || !data.data) return notFound();
 
@@ -60,7 +64,7 @@ export default function ProfileSection() {
 
   return (
     <section className="w-full">
-      <div className="relative w-full h-32 bg-brand-primary" />
+      <div className="relative w-full h-32 bg-blue-500" />
       <div className="relative">
         <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md">
           <Image
@@ -89,7 +93,7 @@ export default function ProfileSection() {
         </div>
       </div>
 
-      <div className="max-w-full mt-8 flex flex-col gap-2">
+      <div className="max-w-full mt-8 flex flex-col gap-2 bg-inherit">
         <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/mypage/posts")}>
           내가 쓴 글
         </div>
@@ -97,6 +101,11 @@ export default function ProfileSection() {
 
         <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/likes")}>
           관심 목록
+        </div>
+        <hr className="border-gray-200" />
+
+        <div className="px-4 py-3 cursor-pointer" onClick={() => setIsThemeDrawerOpen(true)}>
+          테마변경
         </div>
         <hr className="border-gray-200" />
 
@@ -108,6 +117,7 @@ export default function ProfileSection() {
         >
           로그아웃
         </div>
+
         <hr className="border-gray-200" />
       </div>
 
@@ -117,6 +127,7 @@ export default function ProfileSection() {
         defaultValues={{ profileUrl: profile_url, nickname }}
         onSubmit={handleSave}
       />
+      <ThemeDrawer open={isThemeDrawerOpen} onOpenChange={setIsThemeDrawerOpen} />
     </section>
   );
 }

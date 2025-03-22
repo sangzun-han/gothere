@@ -43,10 +43,10 @@ export default function LocationErrorDrawer({ visible, onClose, selectedAddressN
       <DrawerContent className="flex flex-col">
         <div className="flex-none p-4">
           <DrawerTitle className="space-x-2 flex items-center">
-            <MapPin className="w-4 h-4 text-text-primary" />
-            <span className="text-sm font-medium text-text-primary">{addressName}에서</span>
+            <MapPin className="w-4 h-4 text-gray-900" />
+            <span className="text-sm font-medium text-gray-900">{addressName}에서</span>
           </DrawerTitle>
-          <DrawerDescription className="text-xs font-medium text-text-secondary mt-2">
+          <DrawerDescription className="text-xs font-medium text-gray-700 mt-2">
             {selectedAddressName}
           </DrawerDescription>
         </div>
@@ -57,12 +57,12 @@ export default function LocationErrorDrawer({ visible, onClose, selectedAddressN
             <MyMarker latitude={selectedCoords.lat} longitude={selectedCoords.lng} role="OTHER" />
           </Map>
         </div>
-        <p className="text-sm text-text-secondary mt-4 px-4">
+        <p className="text-sm text-gray-700 mt-4 px-4">
           선택한 장소가 현재 위치와 동일한 &apos;동&apos;에 있어야 작업을 진행할 수 있습니다.
         </p>
         <DrawerFooter className="flex-none p-4">
           <DrawerClose asChild>
-            <Button onClick={onClose} className="w-full bg-brand-primary hover:bg-brand-hover text-white">
+            <Button onClick={onClose} className="w-full bg-blue-500 hover:bg-blue-600 text-white">
               확인
             </Button>
           </DrawerClose>

@@ -1,7 +1,7 @@
 export default function ProfileSectionFallback() {
   return (
     <section className="w-full">
-      <div className="relative w-full h-32 bg-brand-primary animate-pulse" />
+      <div className="relative w-full h-32 bg-blue-500 animate-pulse" />
 
       <div className="relative">
         <div className="absolute top-[-60px] left-1/2 -translate-x-1/2 w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md">

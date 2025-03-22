@@ -40,10 +40,10 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="w-full max-w-[320px] md:max-w-[425px] p-6 rounded-lg shadow-lg bg-white">
+      <DialogContent className="w-full max-w-[320px] md:max-w-[425px] p-6 rounded-lg shadow-lg bg-app-background">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center text-zinc-800">프로필 수정</DialogTitle>
-          <DialogDescription className="text-sm text-center text-zinc-500 mt-2">
+          <DialogTitle className="text-2xl font-bold text-center text-gray-900">프로필 수정</DialogTitle>
+          <DialogDescription className="text-sm text-center text-gray-700 mt-2">
             나를 표현하는 프로필 이미지와 닉네임을 설정해보세요
           </DialogDescription>
         </DialogHeader>
@@ -60,7 +60,7 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
                 </Avatar>
                 <Input type="file" accept="image/*" onChange={handleFileChange} className="hidden" id="file-upload" />
                 <Label htmlFor="file-upload" className="cursor-pointer">
-                  <div className="absolute bottom-0 right-0 p-2 bg-brand-primary rounded-full hover:bg-brand-hover">
+                  <div className="absolute bottom-0 right-0 p-2 bg-blue-500 rounded-full hover:bg-brand-hover">
                     <Camera className="w-4 h-4 text-white" />
                   </div>
                 </Label>
@@ -68,7 +68,7 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="nickname" className="text-sm font-medium text-zinc-700">
+              <Label htmlFor="nickname" className="text-sm font-medium text-gray-700">
                 닉네임
               </Label>
               <Input id="nickname" {...register("nickname")} />
@@ -81,10 +81,10 @@ export default function EditProfileDialog({ isOpen, onClose, defaultValues, onSu
               취소
             </Button>
             <Button
-              className={`bg-brand-primary text-white border-none 
-                disabled:bg-brand-primary/70 
+              className={`bg-blue-500 text-white border-none 
+                disabled:bg-blue-500/70 
                 disabled:cursor-not-allowed 
-                hover:bg-brand-hover`}
+                hover:bg-blue-600`}
               type="submit"
               disabled={isSubmitting}
             >

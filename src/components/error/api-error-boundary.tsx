@@ -14,7 +14,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: ApiError; resetEr
     resetErrorBoundary();
   };
 
-  const errorMessageStyles = "text-lg text-gray-800 font-semibold mt-4";
+  const errorMessageStyles = "text-lg text-gray-900 font-semibold mt-4";
 
   switch (error.status) {
     case 404:
@@ -24,7 +24,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: ApiError; resetEr
           <h2 className={`${errorMessageStyles} text-2xl text-gray-700`}>게시글을 찾을 수 없습니다</h2>
           <Button
             onClick={handleReset}
-            className="mt-6 px-6 py-3 bg-brand-primary text-white rounded-full hover:bg-brand-hover transition duration-300"
+            className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-brand-hover transition duration-300"
           >
             다시 시도
           </Button>
@@ -37,7 +37,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: ApiError; resetEr
           <h2 className={`${errorMessageStyles} text-2xl text-gray-700`}>인증정보를 다시 확인해주세요</h2>
           <Button
             onClick={handleReset}
-            className="mt-6 px-6 py-3 bg-brand-primary text-white rounded-full hover:bg-brand-hover transition duration-300"
+            className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-brand-hover transition duration-300"
           >
             다시 시도
           </Button>
@@ -51,7 +51,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: ApiError; resetEr
           <p className="text-sm text-gray-600 mt-2">{error.message}</p>
           <Button
             onClick={handleReset}
-            className="mt-6 px-6 py-3 bg-brand-primary text-white rounded-full hover:bg-brand-hover transition duration-300"
+            className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-brand-hover transition duration-300"
           >
             다시 시도
           </Button>
@@ -65,7 +65,7 @@ const ErrorFallback = ({ error, resetErrorBoundary }: { error: ApiError; resetEr
           <p className="text-sm text-gray-600 mt-2">잠시 후 다시 시도해주세요</p>
           <Button
             onClick={handleReset}
-            className="mt-6 px-6 py-3 bg-brand-primary text-white rounded-full hover:bg-brand-hover transition duration-300"
+            className="mt-6 px-6 py-3 bg-blue-500 text-white rounded-full hover:bg-brand-hover transition duration-300"
           >
             다시 시도
           </Button>

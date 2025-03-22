@@ -9,9 +9,9 @@ export default function NoPost({
 }: NoPostProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-0 pointer-events-none">
-      <div className="relative bg-white p-8 max-w-full text-center">
-        <div className="text-2xl font-extrabold text-text-primary mb-2">{title}</div>
-        <p className="text-text-secondary text-sm mb-4">{description}</p>
+      <div className="relative bg-app-background p-8 max-w-full text-center">
+        <div className="text-2xl font-extrabold mb-2">{title}</div>
+        <p className="text-gray-700 text-sm mb-4">{description}</p>
       </div>
     </div>
   );

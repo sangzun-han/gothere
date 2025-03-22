@@ -24,16 +24,14 @@ export default function BottomNavigation() {
       <nav id="bottom-navigation" className="fixed bottom-0 z-10 flex w-full flex-col items-center justify-center">
         <div
           ref={navRef}
-          className="absolute bottom-0 w-full bg-white rounded-t-2xl shadow p-2 flex items-center justify-around z-50 border-t border-secondary"
+          className="absolute bottom-0 w-full bg-app-background rounded-t-2xl shadow p-2 flex items-center justify-around z-50 border-t border-secondary"
         >
           {NAV_ITEMS.map((item) => (
             <Link
               href={item.path}
               key={item.label}
               className={`flex flex-col items-center mb-1 ${
-                pathname === item.path
-                  ? "text-brand-primary font-bold"
-                  : "text-text-secondary/50 hover:text-brand-primary"
+                pathname === item.path ? "text-blue-500 font-bold" : "text-gray-900"
               }`}
             >
               {item.icon}

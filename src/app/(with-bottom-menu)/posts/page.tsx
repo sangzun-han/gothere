@@ -13,9 +13,9 @@ export default function Page() {
   const { si, gu, dong } = location;
   return (
     <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
-      <article className="bg-white p-4 min-h-screen relative">
+      <article className="p-4 min-h-screen relative">
         <header>
-          <h1 className="text-base font-bold text-gray-800 mb-4 border-b-2 border-gray-400 pb-2">
+          <h1 className="text-base font-bold text-gray-900 mb-4 border-b-2 border-gray-400 pb-2">
             📮 {location.addressName}
           </h1>
         </header>

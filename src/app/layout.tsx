@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
 import RecoilProvider from "@/providers/recoil-provider";
 import KakaoLoaderProvider from "@/providers/kakao-loader-provider";
-import { Toaster } from "@/components/ui/toaster";
 import ReactQueryProvider from "@/providers/react-query-provider";
+import ThemeProvider from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -39,14 +40,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="ko" suppressHydrationWarning>
       <body className={`${inter.className} overflow-auto`}>
-        <RecoilProvider>
-          <KakaoLoaderProvider>
-            <ReactQueryProvider>{children}</ReactQueryProvider>
-            <Toaster />
-          </KakaoLoaderProvider>
-        </RecoilProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+          <RecoilProvider>
+            <KakaoLoaderProvider>
+              <ReactQueryProvider>{children}</ReactQueryProvider>
+              <Toaster />
+            </KakaoLoaderProvider>
+          </RecoilProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

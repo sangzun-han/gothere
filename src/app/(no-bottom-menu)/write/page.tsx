@@ -159,7 +159,7 @@ export default function Page() {
               placeholder="내용을 입력하세요"
             />
           </div>
-          <footer className="fixed bottom-0 w-full bg-app-background border-t border-gray-300 px-4 py-3">
+          <footer className="fixed bottom-0 w-full border-t border-gray-300 px-4 py-3">
             <Button
               type="submit"
               className={`w-full bg-blue-500 text-white border-none 

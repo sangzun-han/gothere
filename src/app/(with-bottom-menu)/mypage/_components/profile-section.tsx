@@ -11,6 +11,7 @@ import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 import ProfileStat from "./profile-stat";
 import browserClient from "@/utils/supabase/client";
 import { useTheme } from "next-themes";
+import ThemeDrawer from "@/components/modal/theme-drawer";
 
 export default function ProfileSection() {
   const router = useRouter();
@@ -21,6 +22,7 @@ export default function ProfileSection() {
   const { mutateAsync } = useUpdateUser();
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isThemeDrawerOpen, setIsThemeDrawerOpen] = useState(false);
 
   if (!data || !data.data) return notFound();
 
@@ -91,7 +93,7 @@ export default function ProfileSection() {
         </div>
       </div>
 
-      <div className="max-w-full mt-8 flex flex-col gap-2">
+      <div className="max-w-full mt-8 flex flex-col gap-2 bg-inherit">
         <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/mypage/posts")}>
           내가 쓴 글
         </div>
@@ -99,6 +101,11 @@ export default function ProfileSection() {
 
         <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/likes")}>
           관심 목록
+        </div>
+        <hr className="border-gray-200" />
+
+        <div className="px-4 py-3 cursor-pointer" onClick={() => setIsThemeDrawerOpen(true)}>
+          테마변경
         </div>
         <hr className="border-gray-200" />
 
@@ -114,18 +121,13 @@ export default function ProfileSection() {
         <hr className="border-gray-200" />
       </div>
 
-      <div className="flex flex-col">
-        The current theme is: {theme}
-        <button onClick={() => setTheme("light")}>Light Mode</button>
-        <button onClick={() => setTheme("dark")}>Dark Mode</button>
-      </div>
-
       <EditProfileDialog
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         defaultValues={{ profileUrl: profile_url, nickname }}
         onSubmit={handleSave}
       />
+      <ThemeDrawer open={isThemeDrawerOpen} onOpenChange={setIsThemeDrawerOpen} />
     </section>
   );
 }

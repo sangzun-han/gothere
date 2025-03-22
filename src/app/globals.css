@@ -132,7 +132,7 @@
     @apply border-border;
   }
   body {
-    background-color: var(--custom-background);
+    background-color: var(--app-background);
     color: var(--color-gray-900);
   }
 }

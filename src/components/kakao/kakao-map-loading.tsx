@@ -7,7 +7,7 @@ interface KakaoMapLoadingProps {
 export default function KakaoMapLoading({ visible = true }: KakaoMapLoadingProps) {
   return (
     <div
-      className={`flex items-center justify-center w-full h-full absolute top-0 left-0 bg-app-background transition-opacity duration-300 ${
+      className={`flex items-center justify-center w-full h-full absolute top-0 left-0 transition-opacity duration-300 ${
         visible ? "opacity-100 z-50" : "opacity-0 z-[-1]"
       }`}
     >

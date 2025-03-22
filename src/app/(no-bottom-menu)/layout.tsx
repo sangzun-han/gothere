@@ -12,7 +12,7 @@ export default function NoBottomMenuLayout({ children, modal }: { children: Reac
   if (isLoggedIn === undefined) return null;
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-app-background">
+    <div className="w-full flex flex-col min-h-screen">
       {!isPostDetail && <NoBottomMenuHeader />}
       {isLoggedIn ? children : modal}
     </div>

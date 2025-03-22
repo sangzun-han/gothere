@@ -28,10 +28,10 @@ export default function PostDetail({ uuid }: { uuid: string }) {
   } = data.data;
 
   return (
-    <main className="flex-1 min-h-0 overflow-y-auto pb-20 [&>article]:min-h-full">
+    <main className="flex-1 min-h-0 overflow-y-auto [&>article]:min-h-full">
       <PostDetailHeader id={uuid} postAuthorId={user_id} />
-      <article className="bg-app-background">
-        <div className="w-full bg-app-background overflow-hidden">
+      <article className="b">
+        <div className="w-full overflow-hidden">
           <section className="relative h-64">
             <Carousel className="">
               <CarouselContent className="h-64">

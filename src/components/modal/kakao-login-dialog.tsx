@@ -80,14 +80,14 @@ function LoginContent({ onClose }: { onClose: () => void }) {
         카카오로 로그인하기
       </Button>
       <Button
-        className="w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+        className="w-full px-4 py-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-200"
         size="lg"
         onClick={signInWithEmail}
       >
         게스트 계정으로 로그인하기
       </Button>
       <Button
-        className="w-full px-4 py-3 text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200"
+        className="w-full px-4 py-3 text-gray-900 bg-gray-100 rounded-md hover:bg-gray-200"
         size="lg"
         onClick={onClose}
       >

@@ -98,7 +98,7 @@ export default function ProfileSection() {
         </Link>
         <hr className="border-gray-200" />
 
-        <Link href="/mypage/likes" className="px-4 py-3">
+        <Link href="/likes" className="px-4 py-3">
           관심 목록
         </Link>
         <hr className="border-gray-200" />

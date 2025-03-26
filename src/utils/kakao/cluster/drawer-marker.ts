@@ -14,23 +14,41 @@ export const drawClusterMarker = (
   clusterY: number,
   clusterCount: number
 ): void => {
-  const clusterSize = getClusterSize(clusterCount);
-  const color = getClusterColor(clusterCount);
+  const text = `+${clusterCount}`;
+  const paddingX = 12;
+
+  const radius = 14;
+
+  ctx.font = "bold 13px sans-serif";
+  const textMetrics = ctx.measureText(text);
+  const textWidth = textMetrics.width;
+
+  const boxWidth = textWidth + paddingX * 2;
+  const boxHeight = 28;
+
+  const rectX = clusterX - boxWidth / 2;
+  const rectY = clusterY - boxHeight / 2;
 
   ctx.beginPath();
-  ctx.fillStyle = color;
-  ctx.arc(clusterX, clusterY, clusterSize, 0, 2 * Math.PI);
+  ctx.moveTo(rectX + radius, rectY);
+  ctx.lineTo(rectX + boxWidth - radius, rectY);
+  ctx.quadraticCurveTo(rectX + boxWidth, rectY, rectX + boxWidth, rectY + radius);
+  ctx.lineTo(rectX + boxWidth, rectY + boxHeight - radius);
+  ctx.quadraticCurveTo(rectX + boxWidth, rectY + boxHeight, rectX + boxWidth - radius, rectY + boxHeight);
+  ctx.lineTo(rectX + radius, rectY + boxHeight);
+  ctx.quadraticCurveTo(rectX, rectY + boxHeight, rectX, rectY + boxHeight - radius);
+  ctx.lineTo(rectX, rectY + radius);
+  ctx.quadraticCurveTo(rectX, rectY, rectX + radius, rectY);
+  ctx.closePath();
+
+  ctx.fillStyle = "#E1325C";
   ctx.fill();
 
-  ctx.lineWidth = 2;
-  ctx.strokeStyle = "#ffffff";
-  ctx.stroke();
-
-  ctx.fillStyle = "white";
-  ctx.font = `bold ${Math.max(14, clusterSize / 3)}px Arial`;
+  ctx.fillStyle = "#ffffff";
   ctx.textAlign = "center";
   ctx.textBaseline = "middle";
-  ctx.fillText(clusterCount.toString(), clusterX, clusterY);
+
+  ctx.fillText(text, clusterX, clusterY + 2);
 };
 
 /**
@@ -39,9 +57,31 @@ export const drawClusterMarker = (
  * @param x 마커 X 좌표
  * @param y 마커 Y 좌표
  */
+
+let cachedImage: HTMLImageElement | null = null;
+
 export const drawSingleMarker = (ctx: CanvasRenderingContext2D, x: number, y: number): void => {
-  ctx.beginPath();
-  ctx.arc(x, y, MARKER_RADIUS, 0, 2 * Math.PI);
-  ctx.fillStyle = "red";
-  ctx.fill();
+  if (!cachedImage) {
+    cachedImage = new Image();
+    cachedImage.src = "/marker.svg";
+  }
+
+  const draw = () => {
+    const originalWidth = cachedImage!.naturalWidth;
+    const originalHeight = cachedImage!.naturalHeight;
+
+    // 원하는 고정 너비
+    const targetWidth = 16;
+    const aspectRatio = originalWidth / originalHeight;
+    const targetHeight = targetWidth / aspectRatio;
+
+    ctx.drawImage(cachedImage!, x - targetWidth / 2, y - targetHeight / 2, targetWidth, targetHeight);
+  };
+
+  if (!cachedImage.complete) {
+    cachedImage.onload = draw;
+    return;
+  }
+
+  draw();
 };

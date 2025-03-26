@@ -1,7 +1,7 @@
 "use client";
 
 import { Map } from "react-kakao-maps-sdk";
-import { KakaoPolygon, ReturnToLocationButton, MyMarker } from "@/components/kakao";
+import { KakaoPolygon, ReturnToLocationButton } from "@/components/kakao";
 import { useMapCenter } from "@/hooks/location";
 import { locationSelector } from "@/recoil/location/selector";
 import { useRecoilValue } from "recoil";
@@ -40,7 +40,6 @@ export default function KakaoMapView() {
     >
       {map && <PostMarkersCanvas map={map} geoPosts={geoPosts?.data ?? []} isReturning={isReturning} />}
       {(!geoPosts || geoPosts.data?.length === 0) && <NoPostMeesage dong={dong} />}
-      <MyMarker latitude={location.latitude} longitude={location.longitude} />
       <KakaoPolygon polygonPaths={polygonPaths} />
       <ReturnToLocationButton onClick={returnToInitialLocation} />
     </Map>

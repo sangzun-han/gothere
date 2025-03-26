@@ -3,7 +3,7 @@ import { GeoPost } from "@/types/posts/posts";
 import { GeoPostMarker } from "@/types/coordinate/coordinate";
 import { clearCanvasElement, resizeCanvasElement } from "@/utils/kakao/cluster/canvas";
 import { createClusters } from "@/utils/kakao/cluster/cluster";
-import { BASE_CLUSTER_GRID_SIZE, THRESHOLD_ZOOM_LEVEL } from "@/constants/cluster";
+import { THRESHOLD_ZOOM_LEVEL } from "@/constants/cluster";
 import { drawClusterMarker, drawSingleMarker } from "@/utils/kakao/cluster/drawer-marker";
 
 interface UseCanvasMarkersProps {
@@ -33,7 +33,7 @@ export default function useKakaoMapMarkerCluster({
     resizeCanvasElement(canvas);
     clearCanvasElement(canvas);
 
-    const clusters = createClusters(map, geoPosts, THRESHOLD_ZOOM_LEVEL, BASE_CLUSTER_GRID_SIZE);
+    const clusters = createClusters(map, geoPosts, THRESHOLD_ZOOM_LEVEL);
     const zoomLevel = map.getLevel();
 
     const newMarkerPositions: GeoPostMarker[] = [];

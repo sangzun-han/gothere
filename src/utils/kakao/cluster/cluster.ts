@@ -1,54 +1,87 @@
 import { GeoPost } from "@/types/posts/posts";
 import { Cluster } from "@/types/coordinate/coordinate";
-import { THRESHOLD_ZOOM_LEVEL } from "@/constants/cluster";
+import { THRESHOLD_ZOOM_LEVEL, PIN_SIZE } from "@/constants/cluster";
+import { getDistance } from "@/utils/distance/get-distance";
 
 /**
- * 지오 포스트들을 클러스터로 그룹화하는 함수
+ * 지오 포스트들을 유니온 파인드로 클러스터링하는 함수
  * @param map 카카오맵 인스턴스
  * @param geoPosts 지오 포스트 배열
  * @param thresholdLevel 클러스터링 임계 줌 레벨
- * @param baseGridSize 클러스터 그리드 크기
  * @returns 클러스터 배열
  */
 export const createClusters = (
   map: kakao.maps.Map,
   geoPosts: GeoPost[],
-  thresholdLevel: number = THRESHOLD_ZOOM_LEVEL,
-  baseGridSize: number = 100
+  thresholdLevel: number = THRESHOLD_ZOOM_LEVEL
 ): Cluster[] => {
   const projection = map.getProjection();
-  const clusterMap = new Map<string, Cluster>();
   const zoomLevel = map.getLevel();
+  const n = geoPosts.length;
 
-  geoPosts.forEach((post) => {
+  const parents = Array.from({ length: n }, (_, i) => i);
+
+  const find = (x: number): number => {
+    if (parents[x] === x) return x;
+    return (parents[x] = find(parents[x]));
+  };
+
+  const union = (a: number, b: number) => {
+    const rootA = find(a);
+    const rootB = find(b);
+    if (rootA !== rootB) parents[rootB] = rootA;
+  };
+
+  const points = geoPosts.map((post) => {
     const latlng = new kakao.maps.LatLng(post.latitude, post.longitude);
-    const point = projection.containerPointFromCoords(latlng);
+    return projection.containerPointFromCoords(latlng);
+  });
 
-    // 특정 줌 레벨 이하에서는 '그냥 개별 포인트'로 처리
-    if (zoomLevel <= thresholdLevel) {
-      clusterMap.set(post.id, { x: point.x, y: point.y, count: 1, posts: [post] });
-      return;
-    }
+  let markerDistance = 80; // 기본값
+  if (zoomLevel > thresholdLevel) {
+    const bounds = map.getBounds();
+    const topLeft = new kakao.maps.LatLng(bounds.getNorthEast().getLat(), bounds.getSouthWest().getLng());
+    const topRight = new kakao.maps.LatLng(bounds.getNorthEast().getLat(), bounds.getNorthEast().getLng());
 
-    // 이미 존재하는 클러스터 중, 현재 포인트와 가까운 것이 있다면 합친다
-    let foundCluster = false;
-    for (const cluster of Array.from(clusterMap.values())) {
-      const dx = cluster.x - point.x;
-      const dy = cluster.y - point.y;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+    const mapWidthInMeters = getDistance(topLeft.getLat(), topLeft.getLng(), topRight.getLat(), topRight.getLng());
+    const screenWidthInPixels = window.innerWidth;
+    const metersPerPixel = mapWidthInMeters / screenWidthInPixels;
 
-      if (distance < baseGridSize) {
-        cluster.posts.push(post);
-        cluster.count += 1;
-        foundCluster = true;
-        break;
+    const CLUSTER_SCALE_FACTOR = 0.4; // 클러스터 거리 보정 계수
+    markerDistance = metersPerPixel * PIN_SIZE * CLUSTER_SCALE_FACTOR;
+  }
+
+  if (zoomLevel > thresholdLevel) {
+    for (let i = 0; i < n; i++) {
+      for (let j = i + 1; j < n; j++) {
+        const dx = points[i].x - points[j].x;
+        const dy = points[i].y - points[j].y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < markerDistance) {
+          union(i, j);
+        }
       }
     }
+  }
 
-    if (!foundCluster) {
-      clusterMap.set(post.id, { x: point.x, y: point.y, count: 1, posts: [post] });
+  const clusterMap = new Map<number, Cluster>();
+
+  for (let i = 0; i < n; i++) {
+    const root = zoomLevel <= thresholdLevel ? i : find(i);
+    const pt = points[i];
+    const post = geoPosts[i];
+
+    if (!clusterMap.has(root)) {
+      clusterMap.set(root, { x: pt.x, y: pt.y, count: 1, posts: [post] });
+    } else {
+      const cluster = clusterMap.get(root)!;
+      cluster.count++;
+      cluster.posts.push(post);
+
+      cluster.x = (cluster.x * (cluster.count - 1) + pt.x) / cluster.count;
+      cluster.y = (cluster.y * (cluster.count - 1) + pt.y) / cluster.count;
     }
-  });
+  }
 
   return Array.from(clusterMap.values());
 };

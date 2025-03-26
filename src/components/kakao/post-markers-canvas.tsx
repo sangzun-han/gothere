@@ -67,7 +67,7 @@ const PostMarkersCanvas: React.FC<PostMarkersCanvasProps> = ({ map, geoPosts, is
 
   return (
     <>
-      <MapCanvas ref={canvasRef}>
+      <MapCanvas ref={canvasRef} isOverlayOpen={!!selectedPost}>
         <OverlayContainer>
           <ConditionalRender condition={!!selectedPost}>
             <PostOverlay post={selectedPost!} onClose={handleCloseOverlay} isReturning={isReturning} />

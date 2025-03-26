@@ -8,11 +8,6 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef } from "react";
 import { CustomOverlayMap } from "react-kakao-maps-sdk";
 
-interface Position {
-  x: number;
-  y: number;
-}
-
 interface PostOverlayProps {
   post: GeoPost;
   onClose: () => void;
@@ -33,7 +28,7 @@ export default function PostOverlay({ post, onClose, isReturning }: PostOverlayP
   }, [isReturning]);
 
   return (
-    <CustomOverlayMap position={{ lat: post.latitude, lng: post.longitude }} yAnchor={1.05}>
+    <CustomOverlayMap position={{ lat: post.latitude, lng: post.longitude }} yAnchor={1.05} zIndex={9999}>
       <div ref={overlayRef} className="relative w-72 bg-app-background rounded-lg shadow-lg px-3 py-2">
         <div className="flex justify-between items-center border-b">
           <h3 className="text-base font-semibold truncate max-w-[85%]" title={post.title}>

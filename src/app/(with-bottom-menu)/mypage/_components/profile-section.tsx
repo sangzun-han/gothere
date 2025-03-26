@@ -10,12 +10,11 @@ import Image from "next/image";
 import EditProfileDialog from "@/components/modal/edit-profile-dialog";
 import ProfileStat from "./profile-stat";
 import browserClient from "@/utils/supabase/client";
-import { useTheme } from "next-themes";
 import ThemeDrawer from "@/components/modal/theme-drawer";
+import Link from "next/link";
 
 export default function ProfileSection() {
   const router = useRouter();
-  const { theme, setTheme } = useTheme();
   const { data } = useGetUser();
   const { data: userStats } = useGetUserStats();
   const { toast } = useToast();
@@ -94,14 +93,14 @@ export default function ProfileSection() {
       </div>
 
       <div className="max-w-full mt-8 flex flex-col gap-2 bg-inherit">
-        <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/mypage/posts")}>
+        <Link href="/mypage/posts" className="block px-4 py-3">
           내가 쓴 글
-        </div>
+        </Link>
         <hr className="border-gray-200" />
 
-        <div className="px-4 py-3 cursor-pointer" onClick={() => router.push("/likes")}>
+        <Link href="/mypage/likes" className="px-4 py-3">
           관심 목록
-        </div>
+        </Link>
         <hr className="border-gray-200" />
 
         <div className="px-4 py-3 cursor-pointer" onClick={() => setIsThemeDrawerOpen(true)}>
